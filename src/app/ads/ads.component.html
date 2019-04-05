@@ -1,3 +1,6 @@
-<h2>{{ad.name}} Details</h2>
-<div><span>id: </span>{{ad.id}}</div>
-<div><span>name: </span>{{ad.name}}</div>
+<h2>My Ads</h2>
+<ul class="ads">
+  <li *ngFor="let ad of ads">
+    <span class="badge">{{ad.id}}</span> {{ad.name}}
+  </li>
+</ul>
