@@ -18,6 +18,7 @@ export class AdsComponent implements OnInit {
   ads: Ad[];
 
   getAds(): void {
-    this.ads = this.adService.getAds();
+    this.adService.getAds()
+        .subscribe(response => this.ads = response.hits);
   }
 }
