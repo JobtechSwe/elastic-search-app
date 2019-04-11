@@ -1,6 +1,17 @@
-<h2>My Ads</h2>
-<ul class="ads">
+<h2>Sök</h2>
+<input #searchBox id="search-box" />
+<button (click)="search(searchBox.value)">Sök</button>
+<p>
+  Annonser: {{ totalNumberOfAds | async }}
+</p>
+<div class="form-group" *ngIf="searchAds | async as ads">
+<ul class="ads" *ngIf="ads.length && !loading">
   <li *ngFor="let ad of ads">
     <span class="badge">{{ad.id}}</span> {{ad.rubrik}}
   </li>
 </ul>
+<span *ngIf="!ads.length">Hittade inga annonser</span>
+</div>
+<div *ngIf="loading">
+  <span>Söker...</span>
+</div>

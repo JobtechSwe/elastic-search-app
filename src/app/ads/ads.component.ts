@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Ad } from '../ad';
 import { AdService } from '../ad.service';
+import { Ad } from '../ad'
+import { Observable, Subject } from 'rxjs';
+import {
+  debounceTime, distinctUntilChanged, switchMap, map, tap
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-ads',
@@ -9,16 +13,32 @@ import { AdService } from '../ad.service';
 })
 export class AdsComponent implements OnInit {
 
-  constructor(private adService: AdService) { }
+  loading: boolean = false;
+  searchAds: Observable<[Ad]>;
+  totalNumberOfAds: Observable<number>;
+  private searchTerms = new Subject<string>();
 
-  ngOnInit() {
-    this.getAds();
+  constructor(private adService: AdService) {}
+
+  // Push a search term into the observable stream.
+  search(term: string): void {
+    this.searchTerms.next(term);
   }
 
-  ads: Ad[];
+  ngOnInit(): void {
 
-  getAds(): void {
-    this.adService.getAds()
-        .subscribe(response => this.ads = response.hits);
+    const result = this.searchTerms.pipe(
+      tap(() => this.loading = true),
+      switchMap((term: string) => this.adService.getAds(term)),
+      tap( () => this.loading = false )
+    );
+    this.searchAds = result.pipe(
+      map(res => res.hits)
+    )
+    this.totalNumberOfAds = result.pipe(
+      map(res => res.total)
+    )
+
   }
+
 }

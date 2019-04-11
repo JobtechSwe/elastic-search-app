@@ -10,9 +10,12 @@ export class AdService {
 
   constructor(private http: HttpClient) { }
   
-  private adsUrl = 'https://jobs.dev.services.jtech.se/af/search?q=l%C3%A4karexamen&offset=0&limit=10';  // URL to web api
+  private adsUrl = 'https://jobs.dev.services.jtech.se/af';  // URL to web api
 
-  getAds(): Observable<SearchAdResponse> {
+  getAds(term: string): Observable<SearchAdResponse> {
+    if (!term.trim()) {
+      return of(new SearchAdResponse());
+    }
     const headerDict = {
       'api-key': 'apa'
     }
@@ -20,10 +23,11 @@ export class AdService {
     const requestOptions = {                                                                                                                                                                                 
       headers: new HttpHeaders(headerDict), 
     };
-    return this.http.get<SearchAdResponse>(this.adsUrl, requestOptions)
+    return this.http.get<SearchAdResponse>(`${this.adsUrl}/search?q=${term}&limit=10`, requestOptions);
   }
 }
 
 export class SearchAdResponse {
-  hits: Ad[];
+  total: number;
+  hits: [Ad];
 }
