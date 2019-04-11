@@ -1,16 +1,19 @@
-<h2>Sök</h2>
-<input #searchBox id="search-box" />
-<button (click)="search(searchBox.value)">Sök</button>
 <p>
-  Annonser: {{ totalNumberOfAds | async }}
+  <mat-form-field appearance="standard">
+    <input matInput #searchBox id="search-box" />
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="search(searchBox.value)">Sök</button>
 </p>
-<div class="form-group" *ngIf="searchAds | async as ads">
-<ul class="ads" *ngIf="ads.length && !loading">
-  <li *ngFor="let ad of ads">
-    <span class="badge">{{ad.id}}</span> {{ad.rubrik}}
-  </li>
-</ul>
-<span *ngIf="!ads.length">Hittade inga annonser</span>
+<div *ngIf="searchAds | async as ads">
+  <mat-list *ngIf="ads.length && !loading">
+    <h3 mat-subheader>Annonser: {{ ads.length }}</h3>
+    <mat-list-item *ngFor="let ad of ads">
+      <h4 mat-line>{{ad.rubrik}}</h4>
+      <p mat-line> {{ad.id}} </p>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+  <span *ngIf="!ads.length">Hittade inga annonser</span>
 </div>
 <div *ngIf="loading">
   <span>Söker...</span>
