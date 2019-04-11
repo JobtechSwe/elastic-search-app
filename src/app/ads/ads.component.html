@@ -1,6 +1,10 @@
-<div class="w3-container w3-center">
-  <mat-form-field appearance="standard" class="w3-margin-right">
-    <input matInput #searchBox id="search-box" (keyup.enter)="search(searchBox.value)" />
+<div class="w3-container w3-center" style="width: 100%">
+  <mat-form-field appearance="standard" class="w3-margin-right" style="width: 80%">
+    <input type="text" autocorrect="off" autocomplete="off" matInput #searchBox id="search-box" (keyup.enter)="search(searchBox.value)" [formControl]="myControl"
+      [matAutocomplete]="auto" />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of autocompleteOptions | async" [value]="option">{{option}}</mat-option>
+    </mat-autocomplete>
   </mat-form-field>
   <button mat-raised-button color="primary" (click)="search(searchBox.value)">Sök</button>
 </div>

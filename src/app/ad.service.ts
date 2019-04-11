@@ -23,11 +23,29 @@ export class AdService {
     const requestOptions = {                                                                                                                                                                                 
       headers: new HttpHeaders(headerDict), 
     };
-    return this.http.get<SearchAdResponse>(`${this.adsUrl}/search?q=${term}&limit=10`, requestOptions);
+    return this.http.get<SearchAdResponse>(`${this.adsUrl}/search?q=${term}`, requestOptions);
+  }
+
+  complete(term: string): Observable<CompleteResponse> {
+    if (!term.trim()) {
+      return of(new CompleteResponse());
+    }
+    const headerDict = {
+      'api-key': 'apa'
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new HttpHeaders(headerDict), 
+    };
+    return this.http.get<CompleteResponse>(`${this.adsUrl}/complete?q=${term}`, requestOptions);
   }
 }
 
 export class SearchAdResponse {
   total: number;
   hits: [Ad];
+}
+
+export class CompleteResponse {
+  typeahead: [string];
 }
