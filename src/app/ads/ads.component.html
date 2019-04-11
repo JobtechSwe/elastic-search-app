@@ -1,9 +1,9 @@
-<p>
-  <mat-form-field appearance="standard">
+<div class="w3-container w3-center">
+  <mat-form-field appearance="standard" class="w3-margin-right">
     <input matInput #searchBox id="search-box" />
   </mat-form-field>
   <button mat-raised-button color="primary" (click)="search(searchBox.value)">Sök</button>
-</p>
+</div>
 <div *ngIf="searchAds | async as ads">
   <mat-list *ngIf="ads.length && !loading">
     <h3 mat-subheader>Annonser: {{ ads.length }}</h3>
