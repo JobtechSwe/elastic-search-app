@@ -1,24 +1,26 @@
 <div class="w3-container w3-center" style="width: 100%">
-  <mat-form-field appearance="standard" class="w3-margin-right" style="width: 80%">
-    <input type="text" autocorrect="off" autocomplete="off" matInput #searchBox id="search-box" (keyup.enter)="search(searchBox.value)" [formControl]="myControl"
+  <mat-form-field appearance="standard" class="w3-margin-right" style="width: 90%">
+    <input type="text" placeholder="Skriv in yrke eller plats" autocorrect="off" autocomplete="off" matInput #searchBox id="search-box" (keyup.enter)="search(searchBox.value)" [formControl]="myControl"
       [matAutocomplete]="auto" />
-    <mat-autocomplete #auto="matAutocomplete">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="search(searchBox.value)">
       <mat-option *ngFor="let option of autocompleteOptions | async" [value]="option">{{option}}</mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  <button mat-raised-button color="primary" (click)="search(searchBox.value)">Sök</button>
+  <!-- <button mat-raised-button color="primary" (click)="search(searchBox.value)">Sök</button> -->
 </div>
-<div *ngIf="searchAds | async as ads">
-  <mat-list *ngIf="ads.length && !loading">
-    <h3 mat-subheader>Annonser: {{ ads.length }}</h3>
-    <mat-list-item *ngFor="let ad of ads">
+<div *ngIf="(searchResult$ | async) as searchResult">
+  <mat-list *ngIf="searchResult.hits.length && !loading">
+    <h3 mat-subheader>Annonser: {{ searchResult.total }}</h3>
+    <mat-list-item *ngFor="let ad of searchResult.hits">
       <h4 mat-line>{{ad.rubrik}}</h4>
       <p mat-line> {{ad.id}} </p>
       <mat-divider></mat-divider>
     </mat-list-item>
   </mat-list>
-  <span *ngIf="!ads.length">Hittade inga annonser</span>
+  <div class="w3-container w3-center" *ngIf="!searchResult.hits.length && !loading">
+    <span>Hittade inga annonser</span>
+  </div>
 </div>
-<div *ngIf="loading">
+<div class="w3-container w3-center" *ngIf="loading">
   <span>Söker...</span>
 </div>

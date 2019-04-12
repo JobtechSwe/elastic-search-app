@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { AdService, CompleteResponse } from '../ad.service';
-import { Ad } from '../ad'
+import { AdService, CompleteResponse, SearchAdResponse } from '../ad.service';
 import { Observable, Subject, of } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap, map, tap, catchError
@@ -17,8 +16,7 @@ export class AdsComponent implements OnInit {
 
   myControl = new FormControl();
   loading: boolean = false;
-  searchAds: Observable<[Ad]>;
-  totalNumberOfAds: Observable<number>;
+  searchResult$: Observable<SearchAdResponse>;
   autocompleteOptions: Observable<string[]>;
   private searchTerms = new Subject<string>();
 
@@ -31,17 +29,11 @@ export class AdsComponent implements OnInit {
 
   ngOnInit(): void {
     
-    const result = this.searchTerms.pipe(
+    this.searchResult$ = this.searchTerms.pipe(
       tap(() => this.loading = true),
       switchMap((term: string) => this.adService.getAds(term)),
       tap( () => this.loading = false )
     );
-    this.searchAds = result.pipe(
-      map(res => res.hits)
-    )
-    this.totalNumberOfAds = result.pipe(
-      map(res => res.total)
-    )
 
     this.autocompleteOptions = this.myControl.valueChanges
       .pipe(
