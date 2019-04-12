@@ -9,8 +9,10 @@ import { Observable, of } from 'rxjs';
 export class AdService {
 
   constructor(private http: HttpClient) { }
-  
-  private adsUrl = 'https://jobs.dev.services.jtech.se/af';  // URL to web api
+
+  private developUrl = 'https://develop-sokannonser.dev.services.jtech.se/open';
+  private productionUrl = 'https://jobs.dev.services.jtech.se/af';
+  adsUrl = this.developUrl
 
   getAds(term: string): Observable<SearchAdResponse> {
     if (!term.trim()) {
