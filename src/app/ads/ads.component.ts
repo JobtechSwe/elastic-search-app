@@ -53,16 +53,7 @@ export class AdsComponent implements OnInit {
           if (res.typeahead === undefined) {
             return new Array<string>()
           }
-          return res.typeahead.map( option => {
-            const typeText: string = this.myControl.value
-            const lastSpace = typeText.lastIndexOf(' ')
-            if (lastSpace != -1) {
-              const startText = typeText.slice(0, lastSpace)
-              return startText + ' ' + option
-            } else {
-              return option
-            }
-          })
+          return res.typeahead
         })
       );
   }
