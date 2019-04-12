@@ -17,6 +17,7 @@ export class AdsComponent implements OnInit {
   myControl = new FormControl();
   loading: boolean = false;
   searchError: boolean = false;
+  searchURL: string;
   searchResult$: Observable<SearchAdResponse>;
   autocompleteOptions: Observable<string[]>;
   private searchTerms = new Subject<string>();
@@ -29,7 +30,7 @@ export class AdsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.searchURL = this.adService.adsUrl
     this.searchResult$ = this.searchTerms.pipe(
       tap(() => { this.loading = true, this.searchError = false } ),
       switchMap((term: string) => { 

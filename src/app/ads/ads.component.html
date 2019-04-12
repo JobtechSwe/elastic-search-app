@@ -1,3 +1,4 @@
+<div class="w3-container w3-center"><p class="w3-tiny">{{ searchURL }}</p></div>
 <div class="w3-container w3-center">
   <mat-form-field style="width: 90%" appearance="outline">
     <input type="text" placeholder="Skriv in yrke eller plats" autocorrect="off" autocomplete="off" matInput #searchBox id="search-box" (keyup.enter)="search(searchBox.value)" [formControl]="myControl"
