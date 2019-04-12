@@ -8,6 +8,7 @@
   </mat-form-field>
   <!-- <button mat-raised-button color="primary" (click)="search(searchBox.value)">Sök</button> -->
 </div>
+<div class="w3-panel w3-red" *ngIf="searchError">Ett fel uppstod vid sökning!</div>
 <div *ngIf="(searchResult$ | async) as searchResult">
   <mat-list *ngIf="searchResult.hits.length && !loading">
     <h3 mat-subheader>Annonser: {{ searchResult.total }}</h3>

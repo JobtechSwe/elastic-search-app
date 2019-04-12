@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AdService, CompleteResponse, SearchAdResponse } from '../ad.service';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject, of, NEVER } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap, map, tap, catchError
 } from 'rxjs/operators';
@@ -16,6 +16,7 @@ export class AdsComponent implements OnInit {
 
   myControl = new FormControl();
   loading: boolean = false;
+  searchError: boolean = false;
   searchResult$: Observable<SearchAdResponse>;
   autocompleteOptions: Observable<string[]>;
   private searchTerms = new Subject<string>();
@@ -30,8 +31,15 @@ export class AdsComponent implements OnInit {
   ngOnInit(): void {
     
     this.searchResult$ = this.searchTerms.pipe(
-      tap(() => this.loading = true),
-      switchMap((term: string) => this.adService.getAds(term)),
+      tap(() => { this.loading = true, this.searchError = false } ),
+      switchMap((term: string) => { 
+        return this.adService.getAds(term).pipe(
+          catchError( err => {
+            this.searchError = true
+            return NEVER 
+          }),
+        )
+      }),
       tap( () => this.loading = false )
     );
 
@@ -42,11 +50,7 @@ export class AdsComponent implements OnInit {
         tap( value => console.log('value = ' + value)),
         switchMap(value => { 
           return this.adService.complete(value).pipe(
-            catchError( err => {
-              var emptyResponse = new CompleteResponse()
-              emptyResponse.typeahead = ['']
-              return of(emptyResponse)
-            }),
+            catchError( err => NEVER),
           )
         }),
         map(res => {
