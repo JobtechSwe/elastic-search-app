@@ -1,6 +1,7 @@
-<div class="w3-container w3-center"><p class="w3-tiny">{{ searchURL }}</p></div>
-<div class="w3-container w3-center">
-  <mat-form-field style="width: 90%" appearance="outline">
+<div fxLayout="column" fxLayoutAlign="space-around center" style="padding-left: 10px; padding-right: 10px">
+  <p class="mat-small">{{ searchURL }}</p>
+  <mat-form-field fxFill appearance="outline">
+      <mat-label>Sök</mat-label>
     <input type="text" placeholder="Skriv in yrke eller plats" autocorrect="off" autocomplete="off" matInput #searchBox id="search-box" (keyup.enter)="search(searchBox.value)" [formControl]="myControl"
       [matAutocomplete]="auto" />
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="search(searchBox.value)">
@@ -22,6 +23,4 @@
     <span>Hittade inga annonser</span>
   </div>
 </div>
-<div class="w3-container w3-center" *ngIf="loading">
-  <span>Söker...</span>
-</div>
+<mat-spinner *ngIf="loading"></mat-spinner>
