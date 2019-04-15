@@ -3,8 +3,8 @@
   <mat-form-field fxFill appearance="outline">
     <mat-label>Sök</mat-label>
     <input type="text" placeholder="Skriv in yrke eller plats" autocorrect="off" autocomplete="off" matInput #searchBox
-      id="search-box" (keyup.enter)="search(searchBox.value)" [formControl]="myControl" [matAutocomplete]="auto" />
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="search(searchBox.value)">
+      id="search-box" (keyup.enter)="search()" [formControl]="searchBoxControl" [matAutocomplete]="auto" />
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectOption($event.option.value)">
       <mat-option *ngFor="let option of autocompleteOptions | async" [value]="option">{{option}}</mat-option>
     </mat-autocomplete>
   </mat-form-field>

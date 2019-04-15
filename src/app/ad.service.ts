@@ -15,7 +15,7 @@ export class AdService {
   adsUrl = this.developUrl
 
   getAds(term: string): Observable<SearchAdResponse> {
-    if (!term.trim()) {
+    if (!term) {
       return of(new SearchAdResponse());
     }
     const headerDict = {
@@ -25,11 +25,12 @@ export class AdService {
     const requestOptions = {                                                                                                                                                                                 
       headers: new HttpHeaders(headerDict), 
     };
-    return this.http.get<SearchAdResponse>(`${this.adsUrl}/search?q=${term}`, requestOptions);
+    let encodedTerm = encodeURI(term)
+    return this.http.get<SearchAdResponse>(`${this.adsUrl}/search?q=${encodedTerm}`, requestOptions);
   }
 
   complete(term: string): Observable<CompleteResponse> {
-    if (!term.trim()) {
+    if (!term) {
       return of(new CompleteResponse());
     }
     const headerDict = {
@@ -39,7 +40,8 @@ export class AdService {
     const requestOptions = {                                                                                                                                                                                 
       headers: new HttpHeaders(headerDict), 
     };
-    return this.http.get<CompleteResponse>(`${this.adsUrl}/complete?q=${term}`, requestOptions);
+    let encodedTerm = encodeURI(term)
+    return this.http.get<CompleteResponse>(`${this.adsUrl}/complete?q=${encodedTerm}`, requestOptions);
   }
 }
 

@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { AdService, CompleteResponse, SearchAdResponse } from '../ad.service';
+import { AdService, SearchAdResponse } from '../ad.service';
 import { Observable, Subject, of, NEVER } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap, map, tap, catchError
 } from 'rxjs/operators';
-import { stringify } from '@angular/core/src/util';
+import { MatAutocompleteTrigger } from '@angular/material';
 
 @Component({
   selector: 'app-ads',
@@ -14,7 +14,7 @@ import { stringify } from '@angular/core/src/util';
 })
 export class AdsComponent implements OnInit {
 
-  myControl = new FormControl();
+  searchBoxControl = new FormControl();
   loading: boolean = false;
   searchError: boolean = false;
   searchURL: string;
@@ -22,11 +22,17 @@ export class AdsComponent implements OnInit {
   autocompleteOptions: Observable<string[]>;
   private searchTerms = new Subject<string>();
 
+  @ViewChild('searchBox', { read: MatAutocompleteTrigger }) autoComplete: MatAutocompleteTrigger;
+
   constructor(private adService: AdService) {}
 
-  // Push a search term into the observable stream.
-  search(term: string): void {
-    this.searchTerms.next(term);
+  search(): void {
+    this.searchTerms.next(this.searchBoxControl.value);
+    this.autoComplete.closePanel()
+  }
+
+  selectOption(option: string) {
+    this.search()
   }
 
   ngOnInit(): void {
@@ -44,7 +50,7 @@ export class AdsComponent implements OnInit {
       tap( () => this.loading = false )
     );
 
-    this.autocompleteOptions = this.myControl.valueChanges
+    this.autocompleteOptions = this.searchBoxControl.valueChanges
       .pipe(
         debounceTime(300),
         distinctUntilChanged(),
@@ -58,7 +64,12 @@ export class AdsComponent implements OnInit {
           if (res.typeahead === undefined) {
             return new Array<string>()
           }
-          return res.typeahead
+          return res.typeahead.map(option => {
+            var searchArray = this.searchBoxControl.value.split(' ')
+            let lastString = searchArray.pop()
+            searchArray.push(option)
+            return searchArray.join(' ')
+          })
         })
       );
   }
