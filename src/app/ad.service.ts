@@ -21,9 +21,8 @@ export class AdService {
     const headerDict = {
       'api-key': 'apa'
     }
-    let encodedTerm = encodeURI(request.term)
     let httpParams = new HttpParams()
-    httpParams = httpParams.set('q', encodedTerm)
+    httpParams = httpParams.set('q', request.term)
     request.stats.forEach(element => {
       console.log(element)
       httpParams = httpParams.append('stats', element)
@@ -43,9 +42,8 @@ export class AdService {
       'api-key': 'apa'
     }
     
-    let encodedTerm = encodeURI(term)
     let httpParams = new HttpParams()
-    httpParams = httpParams.set('q', encodedTerm)
+    httpParams = httpParams.set('q', term)
     const requestOptions = {                                                                                                                                                                                 
       headers: new HttpHeaders(headerDict),
       params: httpParams
