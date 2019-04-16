@@ -1,5 +1,5 @@
 <div fxLayout="column" fxLayoutAlign="space-around center" style="padding-left: 10px; padding-right: 10px">
-  <p class="mat-small">{{ searchURL }}</p>
+  <!-- <p class="mat-small">{{ searchURL }}</p> -->
   <mat-form-field fxFill appearance="outline">
     <mat-label>Sök</mat-label>
     <input type="text" placeholder="Skriv in yrke eller plats" autocorrect="off" autocomplete="off" matInput #searchBox
@@ -17,7 +17,7 @@
   <mat-list *ngIf="searchResult.hits.length && !loading">
     <h3 mat-subheader>Annonser: {{ searchResult.total }}</h3>
     <mat-list-item *ngFor="let ad of searchResult.hits">
-      <h4 mat-line>{{ad.rubrik}}</h4>
+      <h4 mat-line>{{ad.headline}}</h4>
       <p mat-line> {{ad.id}} </p>
       <mat-divider></mat-divider>
     </mat-list-item>

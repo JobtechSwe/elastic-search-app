@@ -1,4 +1,4 @@
 export class Ad {
     id: number;
-    rubrik: string;
+    headline: string;
   }
