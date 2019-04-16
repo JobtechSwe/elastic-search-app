@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { AdService, SearchAdResponse } from '../ad.service';
+import { AdService, SearchAdResponse, SearchAdRequest } from '../ad.service';
 import { Observable, Subject, of, NEVER } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap, map, tap, catchError
@@ -39,8 +39,11 @@ export class AdsComponent implements OnInit {
     this.searchURL = this.adService.adsUrl
     this.searchResult$ = this.searchTerms.pipe(
       tap(() => { this.loading = true, this.searchError = false } ),
-      switchMap((term: string) => { 
-        return this.adService.getAds(term).pipe(
+      switchMap((term: string) => {
+        var searchRequest = new SearchAdRequest()
+        searchRequest.term = term
+        searchRequest.stats = ['occupation', 'group', 'field']
+        return this.adService.getAds(searchRequest).pipe(
           catchError( err => {
             this.searchError = true
             return NEVER 

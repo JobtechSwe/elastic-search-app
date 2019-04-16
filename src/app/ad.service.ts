@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Ad } from './ad';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -14,19 +14,25 @@ export class AdService {
   private productionUrl = 'https://jobs.dev.services.jtech.se/af';
   adsUrl = this.developUrl
 
-  getAds(term: string): Observable<SearchAdResponse> {
-    if (!term) {
+  getAds(request: SearchAdRequest): Observable<SearchAdResponse> {
+    if (!request.term) {
       return of(new SearchAdResponse());
     }
     const headerDict = {
       'api-key': 'apa'
     }
-    
+    let encodedTerm = encodeURI(request.term)
+    let httpParams = new HttpParams()
+    httpParams = httpParams.set('q', encodedTerm)
+    request.stats.forEach(element => {
+      console.log(element)
+      httpParams = httpParams.append('stats', element)
+    });
     const requestOptions = {                                                                                                                                                                                 
-      headers: new HttpHeaders(headerDict), 
+      headers: new HttpHeaders(headerDict),
+      params: httpParams
     };
-    let encodedTerm = encodeURI(term)
-    return this.http.get<SearchAdResponse>(`${this.adsUrl}/search?q=${encodedTerm}`, requestOptions);
+    return this.http.get<SearchAdResponse>(`${this.adsUrl}/search`, requestOptions);
   }
 
   complete(term: string): Observable<CompleteResponse> {
@@ -37,17 +43,38 @@ export class AdService {
       'api-key': 'apa'
     }
     
-    const requestOptions = {                                                                                                                                                                                 
-      headers: new HttpHeaders(headerDict), 
-    };
     let encodedTerm = encodeURI(term)
-    return this.http.get<CompleteResponse>(`${this.adsUrl}/complete?q=${encodedTerm}`, requestOptions);
+    let httpParams = new HttpParams()
+    httpParams = httpParams.set('q', encodedTerm)
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new HttpHeaders(headerDict),
+      params: httpParams
+    }
+    
+    return this.http.get<CompleteResponse>(`${this.adsUrl}/complete`, requestOptions);
   }
 }
 
+export class SearchAdRequest {
+  term: string
+  stats: Array<string>
+}
+
+export class SearchStatsValue {
+  code: string
+  count: number
+  term: string
+}
+
+export class SearchStats {
+  type: string
+  values: Array<SearchStatsValue>
+}
+
 export class SearchAdResponse {
-  total: number;
-  hits: [Ad];
+  total: number
+  hits: Array<Ad>
+  stats: Array<SearchStats>
 }
 
 export class CompleteResponse {

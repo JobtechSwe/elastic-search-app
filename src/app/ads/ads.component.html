@@ -1,28 +1,48 @@
-<div fxLayout="column" fxLayoutAlign="space-around center" style="padding-left: 10px; padding-right: 10px">
-  <!-- <p class="mat-small">{{ searchURL }}</p> -->
-  <mat-form-field fxFill appearance="outline">
-    <mat-label>Sök</mat-label>
-    <input type="text" placeholder="Skriv in yrke eller plats" autocorrect="off" autocomplete="off" matInput #searchBox
-      id="search-box" (keyup.enter)="search()" [formControl]="searchBoxControl" [matAutocomplete]="auto" />
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectOption($event.option.value)">
-      <mat-option *ngFor="let option of autocompleteOptions | async" [value]="option">{{option}}</mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</div>
-<div fxLayout="column" fxLayoutAlign=" center">
-  <div *ngIf="searchError">Ett fel uppstod vid sökning!</div>
-  <mat-spinner *ngIf="loading"></mat-spinner>
-</div>
-<div *ngIf="(searchResult$ | async) as searchResult">
-  <mat-list *ngIf="searchResult.hits.length && !loading">
-    <h3 mat-subheader>Annonser: {{ searchResult.total }}</h3>
-    <mat-list-item *ngFor="let ad of searchResult.hits">
-      <h4 mat-line>{{ad.headline}}</h4>
-      <p mat-line> {{ad.id}} </p>
-      <mat-divider></mat-divider>
-    </mat-list-item>
-  </mat-list>
-  <div *ngIf="!searchResult.hits.length && !loading" fxLayout="column" fxLayoutAlign=" center">
-    <span>Hittade inga annonser</span>
+<div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+  <mat-card>
+    <mat-form-field fxFill appearance="outline">
+      <mat-label>Sök</mat-label>
+      <input type="text" placeholder="Skriv in yrke eller plats" autocorrect="off" autocomplete="off" matInput
+        #searchBox id="search-box" (keyup.enter)="search()" [formControl]="searchBoxControl" [matAutocomplete]="auto" />
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectOption($event.option.value)">
+        <mat-option *ngFor="let option of autocompleteOptions | async" [value]="option">{{option}}</mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </mat-card>
+  <div fxLayout="column" fxLayoutAlign=" center">
+    <div *ngIf="searchError">Ett fel uppstod vid sökning!</div>
+    <mat-spinner *ngIf="loading"></mat-spinner>
+  </div>
+  <div *ngIf="(searchResult$ | async) as searchResult">
+    <div *ngIf="searchResult.hits.length && !loading">
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Stats
+            </mat-panel-title>
+            <mat-panel-description>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p *ngFor="let stat of searchResult.stats">
+            {{ stat.type }}:
+            <mat-chip-list>
+              <mat-chip *ngFor="let statValue of stat.values">{{ statValue.term }} ({{ statValue.count }})</mat-chip>
+            </mat-chip-list>
+          </p>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-list>
+        <h3 mat-subheader>Annonser: {{ searchResult.total }}</h3>
+        <mat-list-item *ngFor="let ad of searchResult.hits">
+          <h4 mat-line>{{ad.headline}}</h4>
+          <p mat-line> {{ad.id}} </p>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div *ngIf="!searchResult.hits.length && !loading" fxLayout="column" fxLayoutAlign=" center">
+      <span>Hittade inga annonser</span>
+    </div>
   </div>
 </div>
