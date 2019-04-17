@@ -24,13 +24,27 @@ export class AdService {
     let httpParams = new HttpParams()
     httpParams = httpParams.set('q', request.term)
     request.stats.forEach(element => {
-      console.log(element)
       httpParams = httpParams.append('stats', element)
-    });
-    const requestOptions = {                                                                                                                                                                                 
+    })
+    if (request.criterias != undefined) {
+      request.criterias.forEach(element => {
+        switch(element.type) {
+          case 'occupation': {
+            httpParams = httpParams.append('occupation', element.code)
+          }
+          case 'field': {
+            httpParams = httpParams.append('field', element.code)
+          }
+          case 'group': {
+            httpParams = httpParams.append('group', element.code)
+          }
+        }
+      })
+    }
+    const requestOptions = {
       headers: new HttpHeaders(headerDict),
       params: httpParams
-    };
+    }
     return this.http.get<SearchAdResponse>(`${this.adsUrl}/search`, requestOptions);
   }
 
@@ -41,14 +55,14 @@ export class AdService {
     const headerDict = {
       'api-key': 'apa'
     }
-    
+
     let httpParams = new HttpParams()
     httpParams = httpParams.set('q', term)
-    const requestOptions = {                                                                                                                                                                                 
+    const requestOptions = {
       headers: new HttpHeaders(headerDict),
       params: httpParams
     }
-    
+
     return this.http.get<CompleteResponse>(`${this.adsUrl}/complete`, requestOptions);
   }
 }
@@ -56,6 +70,13 @@ export class AdService {
 export class SearchAdRequest {
   term: string
   stats: Array<string>
+  criterias: Array<SearchCriteria>
+}
+
+export class SearchCriteria {
+  type: string
+  code: string
+  term: string
 }
 
 export class SearchStatsValue {
