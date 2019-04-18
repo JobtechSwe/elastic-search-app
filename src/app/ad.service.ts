@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Ad } from './model/ad';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { SearchCriteria } from './model/search-criteria';
 
 @Injectable({
   providedIn: 'root'
@@ -71,12 +72,6 @@ export class SearchAdRequest {
   term: string
   stats: Array<string>
   criterias: Array<SearchCriteria>
-}
-
-export class SearchCriteria {
-  type: string
-  code: string
-  term: string
 }
 
 export class SearchStatsValue {
