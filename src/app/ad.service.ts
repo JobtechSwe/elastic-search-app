@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Ad } from './ad';
+import { Ad } from './model/ad';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
