@@ -1,12 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { AdService, SearchCriteria, SearchAdRequest, SearchStats } from '../ad.service';
 import { Observable, Subject, combineLatest, NEVER } from 'rxjs';
-import {
-  debounceTime, distinctUntilChanged, switchMap, map, tap, catchError
-} from 'rxjs/operators';
-import { MatAutocompleteTrigger, MatListOption, MatAccordion } from '@angular/material';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { switchMap, map, tap, catchError } from 'rxjs/operators';
+import { MatListOption } from '@angular/material';
 
 @Component({
   selector: 'app-ads',
@@ -15,27 +11,19 @@ import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 })
 export class AdsComponent implements OnInit {
 
-  searchBoxControl = new FormControl()
   loading: boolean = false
   searchError: boolean = false
   searchURL: string
   searchResult$: Observable<SearchResultViewModel>
   searchCriteria = new Subject<Array<SearchCriteria>>()
-  autocompleteOptions: Observable<string[]>
+  
   private searchTerms = new Subject<string>()
-
-  @ViewChild('searchBox', { read: MatAutocompleteTrigger }) autoComplete: MatAutocompleteTrigger;
 
   constructor(private adService: AdService) {}
 
-  search(): void {
+  search(term: string): void {
     this.searchCriteria.next([])
-    this.searchTerms.next(this.searchBoxControl.value)
-    this.autoComplete.closePanel()
-  }
-
-  selectOption(option: string) {
-    this.search()
+    this.searchTerms.next(term)
   }
 
   selectStats(selectedStats: Array<MatListOption>) {
@@ -96,29 +84,6 @@ export class AdsComponent implements OnInit {
       }),
       tap( () => this.loading = false )
     );
-
-    this.autocompleteOptions = this.searchBoxControl.valueChanges
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        tap( value => console.log('value = ' + value)),
-        switchMap(value => { 
-          return this.adService.complete(value).pipe(
-            catchError( err => NEVER),
-          )
-        }),
-        map(res => {
-          if (res.typeahead === undefined) {
-            return new Array<string>()
-          }
-          return res.typeahead.map(option => {
-            var searchArray = this.searchBoxControl.value.split(' ')
-            let lastString = searchArray.pop()
-            searchArray.push(option)
-            return searchArray.join(' ')
-          })
-        })
-      );
   }
 
 }

@@ -8,11 +8,13 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 
 import { AppComponent } from './app.component';
 import { AdsComponent } from './ads/ads.component';
+import { SearchBoxComponent } from './search-box/search-box.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AdsComponent
+    AdsComponent,
+    SearchBoxComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, BrowserAnimationsModule, ReactiveFormsModule,
