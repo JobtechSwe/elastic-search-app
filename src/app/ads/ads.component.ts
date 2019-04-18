@@ -18,10 +18,10 @@ export class AdsComponent implements OnInit {
   searchURL: string
   searchResult$: Observable<SearchResultViewModel>
   searchRequest = new Subject<SearchAdRequest>()
-  
+
   private currentSearch = new Search()
 
-  constructor(private adService: AdService) {}
+  constructor(private adService: AdService) { }
 
   search(): void {
     let request = new SearchAdRequest()
@@ -33,6 +33,11 @@ export class AdsComponent implements OnInit {
 
   updateTerm(term: string) {
     this.currentSearch.query = term
+  }
+
+  updateCriterias(criterias: Array<SearchCriteria>) {
+    this.currentSearch.criterias = criterias
+    this.search()
   }
 
   selectStats(selectedStats: Array<MatListOption>) {
@@ -51,39 +56,43 @@ export class AdsComponent implements OnInit {
   ngOnInit(): void {
     this.searchURL = this.adService.adsUrl
     this.searchResult$ = this.searchRequest.pipe(
-      tap(() => { this.loading = true, this.searchError = false } ),
+      tap(() => { this.loading = true, this.searchError = false }),
       switchMap(request => {
         return this.adService.getAds(request).pipe(
-          catchError( err => {
+          catchError(err => {
             this.searchError = true
-            return NEVER 
+            return NEVER
           }),
         )
       }),
       map(response => {
         let viewModel = new SearchResultViewModel()
         viewModel.total = response.total
-        viewModel.hits = response.hits.map(ad => {
-          let viewModel = new AdViewModel()
-          viewModel.headline = ad.headline
-          viewModel.id = ad.id
-          return viewModel
-        })
-        let groupStat = response.stats.find(stat => stat.type === 'group')
-        if (groupStat != undefined) {
-          viewModel.statsGroup = statsValueViewModel(groupStat)
+        if (response.hits) {
+          viewModel.hits = response.hits.map(ad => {
+            let viewModel = new AdViewModel()
+            viewModel.headline = ad.headline
+            viewModel.id = ad.id
+            return viewModel
+          })
         }
-        let fieldStat = response.stats.find(stat => stat.type === 'field')
-        if (fieldStat != undefined) {
-          viewModel.statsField = statsValueViewModel(fieldStat)
-        }
-        let occupationStat = response.stats.find(stat => stat.type === 'occupation')
-        if (occupationStat != undefined) {
-          viewModel.statsOccupation = statsValueViewModel(occupationStat)
+        if (response.stats) {
+          let groupStat = response.stats.find(stat => stat.type === 'group')
+          if (groupStat != undefined) {
+            viewModel.statsGroup = statsValueViewModel(groupStat)
+          }
+          let fieldStat = response.stats.find(stat => stat.type === 'field')
+          if (fieldStat != undefined) {
+            viewModel.statsField = statsValueViewModel(fieldStat)
+          }
+          let occupationStat = response.stats.find(stat => stat.type === 'occupation')
+          if (occupationStat != undefined) {
+            viewModel.statsOccupation = statsValueViewModel(occupationStat)
+          }
         }
         return viewModel
       }),
-      tap( () => this.loading = false )
+      tap(() => this.loading = false)
     );
   }
 

@@ -1,0 +1,28 @@
+<mat-form-field fxFill appearance="outline">
+    <mat-label>Sök kriterie</mat-label>
+    <mat-chip-list #criteriaList>
+      <mat-chip
+        *ngFor="let criteria of selectedCriterias"
+        selectable="true"
+        removable="true"
+        (removed)="remove(criteria)">
+        {{criteria.term}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input
+        placeholder="Skriv in kriteria..."
+        #criteriaInput
+        [formControl]="criteriaCtrl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="criteriaList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        matChipInputAddOnBlur="true"
+        (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let criteria of criteriaOptions | async" [value]="criteria">
+        {{criteria.term}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  

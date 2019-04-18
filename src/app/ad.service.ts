@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Ad } from './model/ad';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, NEVER } from 'rxjs';
 import { SearchCriteria } from './model/search-criteria';
 
 @Injectable({
@@ -11,42 +11,32 @@ export class AdService {
 
   constructor(private http: HttpClient) { }
 
-  private developUrl = 'https://develop-sokannonser.dev.services.jtech.se/open';
-  private productionUrl = 'https://jobs.dev.services.jtech.se/af';
+  private developUrl = 'https://develop-sokannonser.dev.services.jtech.se';
+  private productionUrl = 'https://jobs.dev.services.jtech.se';
   adsUrl = this.developUrl
 
   getAds(request: SearchAdRequest): Observable<SearchAdResponse> {
-    if (!request.term) {
-      return of(new SearchAdResponse());
-    }
     const headerDict = {
       'api-key': 'apa'
     }
     let httpParams = new HttpParams()
-    httpParams = httpParams.set('q', request.term)
+    if (request.term) {
+      httpParams = httpParams.set('q', request.term)
+    }
     request.stats.forEach(element => {
       httpParams = httpParams.append('stats', element)
     })
     if (request.criterias != undefined) {
       request.criterias.forEach(element => {
-        switch(element.type) {
-          case 'occupation': {
-            httpParams = httpParams.append('occupation', element.code)
-          }
-          case 'field': {
-            httpParams = httpParams.append('field', element.code)
-          }
-          case 'group': {
-            httpParams = httpParams.append('group', element.code)
-          }
-        }
+        let type = element.type
+        httpParams = httpParams.append(type, element.code)
       })
     }
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
       params: httpParams
     }
-    return this.http.get<SearchAdResponse>(`${this.adsUrl}/search`, requestOptions);
+    return this.http.get<SearchAdResponse>(`${this.adsUrl}/open/search`, requestOptions);
   }
 
   complete(term: string): Observable<CompleteResponse> {
@@ -64,7 +54,25 @@ export class AdService {
       params: httpParams
     }
 
-    return this.http.get<CompleteResponse>(`${this.adsUrl}/complete`, requestOptions);
+    return this.http.get<CompleteResponse>(`${this.adsUrl}/open/complete`, requestOptions);
+  }
+
+  criteriaSearch(term: string): Observable<CriteriaSearchResponse> {
+    if (!term) {
+      return NEVER
+    }
+    const headerDict = {
+      'api-key': 'apa'
+    }
+
+    let httpParams = new HttpParams()
+    httpParams = httpParams.set('q', term)
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+      params: httpParams
+    }
+
+    return this.http.get<CriteriaSearchResponse>(`${this.adsUrl}/vf/search`, requestOptions);
   }
 }
 
@@ -93,4 +101,17 @@ export class SearchAdResponse {
 
 export class CompleteResponse {
   typeahead: [string];
+}
+
+export class CriteriaSearchResponse {
+  result: Array<VfSearchCriteria>
+}
+
+export class VfSearchCriteria {
+  conceptId: string
+  id: string
+  term: string
+  typ: string
+  type: string
+  parentId: string
 }

@@ -1,5 +1,5 @@
 <mat-form-field fxFill appearance="outline">
-  <mat-label>Sök</mat-label>
+  <mat-label>Sök fritext</mat-label>
   <input type="text" placeholder="Skriv in yrke eller plats" autocorrect="off" autocomplete="off" matInput #searchBox
     id="search-box" (keyup.enter)="search()" [formControl]="searchBoxControl" [matAutocomplete]="auto" />
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectAutocomplete($event.option.value)">
