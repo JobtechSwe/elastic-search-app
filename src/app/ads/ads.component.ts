@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AdService, SearchCriteria, SearchAdRequest, SearchStats } from '../ad.service';
+import { AdService, SearchAdRequest, SearchStats } from '../ad.service';
 import { Observable, Subject, combineLatest, NEVER } from 'rxjs';
 import { switchMap, map, tap, catchError } from 'rxjs/operators';
 import { MatListOption } from '@angular/material';
+import { Search } from '../model/search';
+import { SearchCriteria } from '../model/search-criteria';
 
 @Component({
   selector: 'app-ads',
@@ -15,15 +17,22 @@ export class AdsComponent implements OnInit {
   searchError: boolean = false
   searchURL: string
   searchResult$: Observable<SearchResultViewModel>
-  searchCriteria = new Subject<Array<SearchCriteria>>()
+  searchRequest = new Subject<SearchAdRequest>()
   
-  private searchTerms = new Subject<string>()
+  private currentSearch = new Search()
 
   constructor(private adService: AdService) {}
 
-  search(term: string): void {
-    this.searchCriteria.next([])
-    this.searchTerms.next(term)
+  search(): void {
+    let request = new SearchAdRequest()
+    request.term = this.currentSearch.query
+    request.stats = ['occupation', 'group', 'field']
+    request.criterias = this.currentSearch.criterias
+    this.searchRequest.next(request)
+  }
+
+  updateTerm(term: string) {
+    this.currentSearch.query = term
   }
 
   selectStats(selectedStats: Array<MatListOption>) {
@@ -35,21 +44,13 @@ export class AdsComponent implements OnInit {
       criteria.term = viewModel.term
       return criteria
     })
-    this.searchCriteria.next(criterias)
+    this.currentSearch.criterias = criterias
+    this.search()
   }
 
   ngOnInit(): void {
     this.searchURL = this.adService.adsUrl
-    let searchRequest = combineLatest(this.searchCriteria, this.searchTerms).pipe(
-      map(([criterias, term]) => {
-        let searchRequest = new SearchAdRequest()
-        searchRequest.term = term
-        searchRequest.stats = ['occupation', 'group', 'field']
-        searchRequest.criterias = criterias
-        return searchRequest
-      }),
-    )
-    this.searchResult$ = searchRequest.pipe(
+    this.searchResult$ = this.searchRequest.pipe(
       tap(() => { this.loading = true, this.searchError = false } ),
       switchMap(request => {
         return this.adService.getAds(request).pipe(

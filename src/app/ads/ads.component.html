@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="10px" style="margin: 10px">
   <mat-card>
-    <app-search-box (onSearch)="search($event)"></app-search-box>
+    <app-search-box (onSearch)="search()" (onChange)="updateTerm($event)"></app-search-box>
     <mat-chip-list>
         <mat-chip *ngFor="let criteria of searchCriteria | async">{{ criteria.term }}</mat-chip>
       </mat-chip-list>

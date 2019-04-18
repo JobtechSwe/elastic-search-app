@@ -15,42 +15,52 @@ export class SearchBoxComponent implements OnInit {
   @Output()
   onSearch = new EventEmitter()
 
+  @Output()
+  onChange = new EventEmitter()
+
   searchBoxControl = new FormControl()
   autocompleteOptions: Observable<string[]>
-  
+
   @ViewChild('searchBox', { read: MatAutocompleteTrigger }) autoComplete: MatAutocompleteTrigger;
-  
+
   constructor(private adService: AdService) { }
 
   ngOnInit() {
-    this.autocompleteOptions = this.searchBoxControl.valueChanges
-    .pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      tap( value => console.log('value = ' + value)),
-      switchMap(value => { 
-        return this.adService.complete(value).pipe(
-          catchError( err => NEVER),
-        )
-      }),
-      map(res => {
-        if (res.typeahead === undefined) {
-          return new Array<string>()
-        }
-        return res.typeahead.map(option => {
-          var searchArray = this.searchBoxControl.value.split(' ')
-          let lastString = searchArray.pop()
-          searchArray.push(option)
-          return searchArray.join(' ')
-        })
-      })
+    let valueChangeSubject = this.searchBoxControl.valueChanges.pipe(
+      tap(value => console.log('value = ' + value))
     )
+
+    valueChangeSubject.subscribe(value => {
+      this.onChange.next(value)
+    })
+
+    this.autocompleteOptions = valueChangeSubject
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap(value => {
+          return this.adService.complete(value).pipe(
+            catchError(err => NEVER),
+          )
+        }),
+        map(res => {
+          if (res.typeahead === undefined) {
+            return new Array<string>()
+          }
+          return res.typeahead.map(option => {
+            var searchArray = this.searchBoxControl.value.split(' ')
+            let lastString = searchArray.pop()
+            searchArray.push(option)
+            return searchArray.join(' ')
+          })
+        })
+      )
 
   }
 
   search() {
     this.autoComplete.closePanel()
-    this.onSearch.next(this.searchBoxControl.value)
+    this.onSearch.next()
   }
 
   selectAutocomplete(option: string) {
