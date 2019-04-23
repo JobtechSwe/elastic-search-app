@@ -3,7 +3,6 @@ import { AdService, SearchAdRequest, SearchStats } from '../ad.service';
 import { Observable, Subject, combineLatest, NEVER } from 'rxjs';
 import { switchMap, map, tap, catchError } from 'rxjs/operators';
 import { MatListOption } from '@angular/material';
-import { Search } from '../model/search';
 import { SearchCriteria } from '../model/search-criteria';
 
 @Component({
@@ -17,22 +16,18 @@ export class AdsComponent implements OnInit {
   searchError: boolean = false
   searchURL: string
   searchResult$: Observable<SearchResultViewModel>
-  searchRequest = new Subject<SearchAdRequest>()
+  currentSearch = new SearchAdRequest()
 
-  currentSearch = new Search()
+  private searchRequest = new Subject<SearchAdRequest>()
 
   constructor(private adService: AdService) { }
 
   search(): void {
-    let request = new SearchAdRequest()
-    request.term = this.currentSearch.query
-    request.stats = ['occupation', 'group', 'field']
-    request.criterias = this.currentSearch.criterias
-    this.searchRequest.next(request)
+    this.searchRequest.next(this.currentSearch)
   }
 
   updateTerm(term: string) {
-    this.currentSearch.query = term
+    this.currentSearch.term = term
   }
 
   updateCriterias(criterias: Array<SearchCriteria>) {
@@ -54,6 +49,8 @@ export class AdsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentSearch.stats = ['occupation', 'group', 'field']
+    this.currentSearch.criterias = []
     this.searchURL = this.adService.adsUrl
     this.searchResult$ = this.searchRequest.pipe(
       tap(() => { this.loading = true, this.searchError = false }),
