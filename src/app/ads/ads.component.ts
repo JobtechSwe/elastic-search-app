@@ -19,7 +19,7 @@ export class AdsComponent implements OnInit {
   searchResult$: Observable<SearchResultViewModel>
   searchRequest = new Subject<SearchAdRequest>()
 
-  private currentSearch = new Search()
+  currentSearch = new Search()
 
   constructor(private adService: AdService) { }
 
@@ -49,7 +49,7 @@ export class AdsComponent implements OnInit {
       criteria.term = viewModel.term
       return criteria
     })
-    this.currentSearch.criterias = criterias
+    this.currentSearch.criterias = this.currentSearch.criterias.concat(criterias)
     this.search()
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, Input } from '@angular/core';
 import { MatChipInputEvent, MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material';
 import { SearchCriteria } from '../model/search-criteria';
 import { Observable, NEVER } from 'rxjs';
@@ -16,7 +16,8 @@ export class CriteriaBoxComponent implements OnInit {
 
   @Output() onChange = new EventEmitter()
   
-  selectedCriterias: SearchCriteria[] = []
+  @Input() selectedCriterias: SearchCriteria[] = []
+
   criteriaOptions: Observable<SearchCriteria[]>
   criteriaCtrl = new FormControl()
 
@@ -66,14 +67,14 @@ export class CriteriaBoxComponent implements OnInit {
     const index = this.selectedCriterias.indexOf(criteria);
 
     if (index >= 0) {
-      this.selectedCriterias.splice(index, 1);
+      this.selectedCriterias.splice(index, 1)
+      this.onChange.next(this.selectedCriterias)
     }
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
     let criteria = event.option.value as SearchCriteria
     this.selectedCriterias.push(criteria)
-    console.log('selected: ' + criteria.term)
     this.onChange.next(this.selectedCriterias)
   }
 }
