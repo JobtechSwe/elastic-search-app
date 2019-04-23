@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NEVER, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, switchMap, catchError, map } from 'rxjs/operators';
-import { AdService } from '../ad.service';
+import { AdService, SearchAdRequest } from '../ad.service';
 import { MatAutocompleteTrigger } from '@angular/material';
 
 @Component({
@@ -11,6 +11,9 @@ import { MatAutocompleteTrigger } from '@angular/material';
   styleUrls: ['./search-box.component.css']
 })
 export class SearchBoxComponent implements OnInit {
+
+  @Input()
+  currentSearch: SearchAdRequest
 
   @Output()
   onSearch = new EventEmitter()
@@ -39,7 +42,7 @@ export class SearchBoxComponent implements OnInit {
         debounceTime(300),
         distinctUntilChanged(),
         switchMap(value => {
-          return this.adService.complete(value).pipe(
+          return this.adService.complete(value, this.currentSearch).pipe(
             catchError(err => NEVER),
           )
         }),

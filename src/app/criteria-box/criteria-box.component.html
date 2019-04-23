@@ -21,7 +21,7 @@
     </mat-chip-list>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
       <mat-option *ngFor="let criteria of criteriaOptions | async" [value]="criteria">
-        {{criteria.term}}
+        {{criteria.term}} <span class="mat-small">{{criteria.type}}</span>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>

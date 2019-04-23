@@ -39,7 +39,7 @@ export class AdService {
     return this.http.get<SearchAdResponse>(`${this.adsUrl}/open/search`, requestOptions);
   }
 
-  complete(term: string): Observable<CompleteResponse> {
+  complete(term: string, request: SearchAdRequest): Observable<CompleteResponse> {
     if (!term) {
       return of(new CompleteResponse());
     }
@@ -49,6 +49,13 @@ export class AdService {
 
     let httpParams = new HttpParams()
     httpParams = httpParams.set('q', term)
+    if (request.criterias != undefined) {
+      request.criterias.forEach(element => {
+        let type = element.type
+        httpParams = httpParams.append(type, element.code)
+      })
+    }
+    
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
       params: httpParams

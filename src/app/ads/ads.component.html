@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="10px" style="margin: 10px">
   <mat-card>
-    <app-search-box (onSearch)="search()" (onChange)="updateTerm($event)"></app-search-box>
+    <app-search-box (onSearch)="search()" (onChange)="updateTerm($event)" [currentSearch]="currentSearch"></app-search-box>
     <app-criteria-box (onChange)="updateCriterias($event)" [selectedCriterias]="currentSearch.criterias"></app-criteria-box>
   </mat-card>
   <div fxLayout="column" fxLayoutAlign=" center">
