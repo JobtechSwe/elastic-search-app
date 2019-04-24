@@ -70,6 +70,10 @@ export class AdsComponent implements OnInit {
             let viewModel = new AdViewModel()
             viewModel.headline = ad.headline
             viewModel.id = ad.id
+            viewModel.text = ad.description.text.substring(0, 200) + "..."
+            viewModel.occupationName = ad.occupation.label
+            viewModel.occupationField = ad.occupation_field.label
+            viewModel.occupationGroup = ad.occupation_group.label
             return viewModel
           })
         }
@@ -118,6 +122,10 @@ export class SearchResultViewModel {
 export class AdViewModel {
   id: number
   headline: string
+  text: string
+  occupationName: string
+  occupationField: string
+  occupationGroup: string
 }
 
 export class StatsValueViewModel {

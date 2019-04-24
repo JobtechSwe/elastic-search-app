@@ -1,7 +1,9 @@
 <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="10px" style="margin: 10px">
   <mat-card>
-    <app-search-box (onSearch)="search()" (onChange)="updateTerm($event)" [currentSearch]="currentSearch"></app-search-box>
-    <app-criteria-box (onChange)="updateCriterias($event)" [selectedCriterias]="currentSearch.criterias"></app-criteria-box>
+    <app-search-box (onSearch)="search()" (onChange)="updateTerm($event)" [currentSearch]="currentSearch">
+    </app-search-box>
+    <app-criteria-box (onChange)="updateCriterias($event)" [selectedCriterias]="currentSearch.criterias">
+    </app-criteria-box>
   </mat-card>
   <div fxLayout="column" fxLayoutAlign=" center">
     <div *ngIf="searchError">Ett fel uppstod vid sökning!</div>
@@ -37,14 +39,20 @@
           </mat-action-row>
         </mat-expansion-panel>
       </mat-accordion>
-      <mat-list>
-        <h3 mat-subheader>Annonser: {{ searchResult.total }}</h3>
-        <mat-list-item *ngFor="let ad of searchResult.hits">
-          <h4 mat-line>{{ad.headline}}</h4>
-          <p mat-line> {{ad.id}} </p>
-          <mat-divider></mat-divider>
-        </mat-list-item>
-      </mat-list>
+      <h3 mat-subheader>Annonser: {{ searchResult.total }}</h3>
+      <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+        <mat-card *ngFor="let ad of searchResult.hits">
+          <mat-card-title>{{ad.headline}}</mat-card-title>
+          <mat-card-subtitle>ID: {{ad.id}}</mat-card-subtitle>
+          <mat-card-content>
+            {{ad.occupationName}} - {{ad.occupationGroup}} - {{ad.occupationField}}
+         </mat-card-content>
+          <mat-card-actions [align]='end'>
+            <a mat-button [href]="'https://www.arbetsformedlingen.se/For-arbetssokande/Platsbanken/annonser/' + ad.id"
+              target="_blank">ÖPPNA I PLATSBANKEN</a>
+          </mat-card-actions>
+        </mat-card>
+      </div>
     </div>
     <div *ngIf="!searchResult.hits.length && !loading" fxLayout="column" fxLayoutAlign=" center">
       <span>Hittade inga annonser</span>
