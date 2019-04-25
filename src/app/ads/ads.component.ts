@@ -49,7 +49,7 @@ export class AdsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentSearch.stats = ['occupation', 'group', 'field']
+    this.currentSearch.stats = ['occupation-name', 'occupation-group', 'occupation-field']
     this.currentSearch.criterias = []
     this.searchURL = this.adService.adsUrl
     this.searchResult$ = this.searchRequest.pipe(
@@ -78,15 +78,15 @@ export class AdsComponent implements OnInit {
           })
         }
         if (response.stats) {
-          let groupStat = response.stats.find(stat => stat.type === 'group')
+          let groupStat = response.stats.find(stat => stat.type === 'occupation-group')
           if (groupStat != undefined) {
             viewModel.statsGroup = statsValueViewModel(groupStat)
           }
-          let fieldStat = response.stats.find(stat => stat.type === 'field')
+          let fieldStat = response.stats.find(stat => stat.type === 'occupation-field')
           if (fieldStat != undefined) {
             viewModel.statsField = statsValueViewModel(fieldStat)
           }
-          let occupationStat = response.stats.find(stat => stat.type === 'occupation')
+          let occupationStat = response.stats.find(stat => stat.type === 'occupation-name')
           if (occupationStat != undefined) {
             viewModel.statsOccupation = statsValueViewModel(occupationStat)
           }
