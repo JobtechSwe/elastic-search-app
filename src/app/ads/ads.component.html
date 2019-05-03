@@ -39,7 +39,7 @@
           </mat-action-row>
         </mat-expansion-panel>
       </mat-accordion>
-      <h3 mat-subheader>Annonser: {{ searchResult.total }}</h3>
+      <h3 mat-subheader>Annonser: {{ searchResult.total.value }}</h3>
       <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
         <mat-card *ngFor="let ad of searchResult.hits">
           <mat-card-title>{{ad.headline}}</mat-card-title>
