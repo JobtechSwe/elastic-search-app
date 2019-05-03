@@ -12,8 +12,8 @@ export class AdService {
   constructor(private http: HttpClient) { }
 
   private developUrl = 'https://develop-sokannonser.dev.services.jtech.se';
-  private productionUrl = 'https://jobs.dev.services.jtech.se';
-  adsUrl = this.developUrl
+  private productionUrl = 'https://open-api.dev.services.jtech.se';
+  adsUrl = this.productionUrl
 
   getAds(request: SearchAdRequest): Observable<SearchAdResponse> {
     const headerDict = {
@@ -36,7 +36,7 @@ export class AdService {
       headers: new HttpHeaders(headerDict),
       params: httpParams
     }
-    return this.http.get<SearchAdResponse>(`${this.adsUrl}/open/search`, requestOptions);
+    return this.http.get<SearchAdResponse>(`${this.adsUrl}/search`, requestOptions);
   }
 
   complete(term: string, request: SearchAdRequest): Observable<CompleteResponse> {
@@ -61,7 +61,7 @@ export class AdService {
       params: httpParams
     }
 
-    return this.http.get<CompleteResponse>(`${this.adsUrl}/open/complete`, requestOptions);
+    return this.http.get<CompleteResponse>(`${this.adsUrl}/complete`, requestOptions);
   }
 
   criteriaSearch(term: string): Observable<CriteriaSearchResponse> {
@@ -79,7 +79,7 @@ export class AdService {
       params: httpParams
     }
 
-    return this.http.get<CriteriaSearchResponse>(`${this.adsUrl}/vf/search`, requestOptions);
+    return this.http.get<CriteriaSearchResponse>(`${this.adsUrl}/taxonomy/search`, requestOptions);
   }
 }
 
