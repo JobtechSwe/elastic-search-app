@@ -22,7 +22,7 @@ export class SearchBoxComponent implements OnInit {
   onChange = new EventEmitter()
 
   searchBoxControl = new FormControl()
-  autocompleteOptions: Observable<string[]>
+  autocompleteOptions: Observable<AutocompleteValueViewModel[]>
 
   @ViewChild('searchBox', { read: MatAutocompleteTrigger }) autoComplete: MatAutocompleteTrigger;
 
@@ -48,13 +48,16 @@ export class SearchBoxComponent implements OnInit {
         }),
         map(res => {
           if (res.typeahead === undefined) {
-            return new Array<string>()
+            return new Array<AutocompleteValueViewModel>()
           }
           return res.typeahead.map(option => {
             var searchArray = this.searchBoxControl.value.split(' ')
             let lastString = searchArray.pop()
-            searchArray.push(option)
-            return searchArray.join(' ')
+            searchArray.push(option.value)
+            var viewModel = new AutocompleteValueViewModel()
+            viewModel.text = searchArray.join(' ')
+            console.log(viewModel)
+            return viewModel
           })
         })
       )
@@ -70,4 +73,8 @@ export class SearchBoxComponent implements OnInit {
     this.search()
   }
 
+}
+
+export class AutocompleteValueViewModel {
+  text: string
 }

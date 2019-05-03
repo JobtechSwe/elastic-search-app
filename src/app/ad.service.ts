@@ -107,7 +107,13 @@ export class SearchAdResponse {
 }
 
 export class CompleteResponse {
-  typeahead: [string];
+  typeahead: [CompleteValue];
+}
+
+export class CompleteValue {
+  occurrences: number
+  type: string
+  value: string
 }
 
 export class CriteriaSearchResponse {
