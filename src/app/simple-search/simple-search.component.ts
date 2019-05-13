@@ -8,7 +8,7 @@ import { AdsearchService } from '../adsearch.service';
 })
 export class SimpleSearchComponent implements OnInit {
 
-  constructor(private searchService: AdsearchService) { }
+  constructor(public searchService: AdsearchService) { }
 
   ngOnInit() {
     this.searchService.clearSearch()
