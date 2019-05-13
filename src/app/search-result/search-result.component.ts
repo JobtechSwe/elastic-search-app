@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SearchResultViewModel } from '../ads/ads.component';
+import { SearchResultViewModel } from '../adsearch.service';
 
 @Component({
   selector: 'app-search-result',

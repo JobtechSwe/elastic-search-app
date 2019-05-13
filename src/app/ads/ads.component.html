@@ -9,5 +9,6 @@
     <div *ngIf="searchService.searchError">Ett fel uppstod vid sökning!</div>
     <mat-spinner *ngIf="searchService.loading"></mat-spinner>
   </div>
+  <app-search-stats [searchResult$]="searchService.searchResult$" (selectedStats)="searchService.selectStats($event)"></app-search-stats>
   <app-search-result [searchResult$]="searchService.searchResult$"></app-search-result>
 </div>

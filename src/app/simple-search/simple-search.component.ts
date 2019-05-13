@@ -11,6 +11,7 @@ export class SimpleSearchComponent implements OnInit {
   constructor(private searchService: AdsearchService) { }
 
   ngOnInit() {
+    this.searchService.clearSearch()
   }
 
 }

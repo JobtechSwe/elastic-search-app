@@ -1,33 +1,5 @@
 <div *ngIf="(searchResult$ | async) as searchResult">
   <div *ngIf="searchResult.hits.length && !loading">
-    <mat-accordion #statsAccordion>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Stats
-          </mat-panel-title>
-          <mat-panel-description>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <mat-selection-list #statsGroup>
-          <h3 matSubheader>Field</h3>
-          <mat-list-option *ngFor="let statValue of searchResult.statsField" [value]="statValue">
-            {{ statValue.term }} ({{ statValue.count }})
-          </mat-list-option>
-          <h3 matSubheader>Group</h3>
-          <mat-list-option *ngFor="let statValue of searchResult.statsGroup" [value]="statValue">
-            {{ statValue.term }} ({{ statValue.count }})
-          </mat-list-option>
-          <h3 matSubheader>Occupation</h3>
-          <mat-list-option *ngFor="let statValue of searchResult.statsOccupation" [value]="statValue">
-            {{ statValue.term }} ({{ statValue.count }})
-          </mat-list-option>
-        </mat-selection-list>
-        <mat-action-row>
-          <button mat-button color="primary" (click)="selectStats(statsGroup.selectedOptions.selected)">Spara</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-    </mat-accordion>
     <h3 mat-subheader>Annonser: {{ searchResult.total.value }}</h3>
     <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
       <mat-card *ngFor="let ad of searchResult.hits">

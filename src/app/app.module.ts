@@ -13,6 +13,7 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 import { CriteriaBoxComponent } from './criteria-box/criteria-box.component';
 import { SimpleSearchComponent } from './simple-search/simple-search.component';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { SearchStatsComponent } from './search-stats/search-stats.component';
 
 const appRoutes: Routes = [
   { path: 'search', component: AdsComponent },
@@ -26,7 +27,8 @@ const appRoutes: Routes = [
     SearchBoxComponent,
     CriteriaBoxComponent,
     SimpleSearchComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    SearchStatsComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, BrowserAnimationsModule, ReactiveFormsModule,

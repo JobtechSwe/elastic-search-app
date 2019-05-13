@@ -18,8 +18,7 @@ export class AdsearchService {
   private searchRequest = new Subject<SearchAdRequest>()
   
   constructor(private adService: AdService) {
-    this.currentSearch.stats = ['occupation-name', 'occupation-group', 'occupation-field']
-    this.currentSearch.criterias = []
+    this.clearSearch()
     this.searchResult$ = this.searchRequest.pipe(
       tap(() => { this.loading = true, this.searchError = false }),
       switchMap(request => {
@@ -91,7 +90,10 @@ export class AdsearchService {
     this.search()
   }
 
-  ngOnInit(): void {
+  clearSearch() {
+    this.currentSearch = new SearchAdRequest()
+    this.currentSearch.stats = ['occupation-name', 'occupation-group', 'occupation-field']
+    this.currentSearch.criterias = []
   }
 }
 

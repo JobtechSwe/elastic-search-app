@@ -13,6 +13,8 @@ export class AdsComponent implements OnInit {
 
   constructor(private searchService: AdsearchService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.searchService.clearSearch()
+  }
 
 }
