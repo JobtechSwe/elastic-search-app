@@ -5,24 +5,38 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatInputModule, MatFormFieldModule, MatToolbarModule, MatListModule, MatAutocompleteModule, MatProgressSpinnerModule, MatExpansionModule, MatChipsModule, MatCardModule, MatBadgeModule, MatIconModule } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AdsComponent } from './ads/ads.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { CriteriaBoxComponent } from './criteria-box/criteria-box.component';
+import { SimpleSearchComponent } from './simple-search/simple-search.component';
+import { SearchResultComponent } from './search-result/search-result.component';
+
+const appRoutes: Routes = [
+  { path: 'search', component: AdsComponent },
+  { path: 'simplesearch', component: SimpleSearchComponent },
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     AdsComponent,
     SearchBoxComponent,
-    CriteriaBoxComponent
+    CriteriaBoxComponent,
+    SimpleSearchComponent,
+    SearchResultComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, BrowserAnimationsModule, ReactiveFormsModule,
     MatButtonModule, MatInputModule, MatFormFieldModule, MatProgressSpinnerModule,
     MatToolbarModule, MatListModule, MatAutocompleteModule, MatExpansionModule,
-    FlexLayoutModule, MatChipsModule, MatCardModule, MatBadgeModule, MatIconModule
+    FlexLayoutModule, MatChipsModule, MatCardModule, MatBadgeModule, MatIconModule,
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]

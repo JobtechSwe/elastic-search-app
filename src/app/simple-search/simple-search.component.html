@@ -2,8 +2,6 @@
   <mat-card>
     <app-search-box (onSearch)="searchService.search()" (onChange)="searchService.updateTerm($event)" [currentSearch]="searchService.currentSearch">
     </app-search-box>
-    <app-criteria-box (onChange)="searchService.updateCriterias($event)" [selectedCriterias]="searchService.currentSearch.criterias">
-    </app-criteria-box>
   </mat-card>
   <div fxLayout="column" fxLayoutAlign=" center">
     <div *ngIf="searchService.searchError">Ett fel uppstod vid sökning!</div>
