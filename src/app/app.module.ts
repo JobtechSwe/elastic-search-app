@@ -16,7 +16,7 @@ import { SearchResultComponent } from './search-result/search-result.component';
 import { SearchStatsComponent } from './search-stats/search-stats.component';
 
 const appRoutes: Routes = [
-  { path: 'search', component: AdsComponent },
+  { path: '', component: AdsComponent },
   { path: 'simplesearch', component: SimpleSearchComponent },
 ];
 
