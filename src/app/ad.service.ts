@@ -23,9 +23,11 @@ export class AdService {
     if (request.term) {
       httpParams = httpParams.set('q', request.term)
     }
+    httpParams = httpParams.set('stats.limit', '20')
     request.stats.forEach(element => {
       httpParams = httpParams.append('stats', element)
     })
+    
     if (request.criterias != undefined) {
       request.criterias.forEach(element => {
         let type = element.type
