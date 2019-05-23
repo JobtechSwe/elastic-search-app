@@ -2,9 +2,10 @@
 <mat-dialog-content>
   <mat-form-field>
     <mat-label>Driftsmiljö</mat-label>
-    <mat-select [(value)]="this.adService.adsUrl">
-      <mat-option [(value)]="this.adService.developUrl">Utveckling</mat-option>
-      <mat-option [(value)]="this.adService.productionUrl">Produktion</mat-option>
+    <mat-select [(value)]="this.adService.selectedEnvironment">
+      <mat-option *ngFor="let environment of this.adService.jsEnvironements" [value]="environment">
+        {{environment.title}}
+      </mat-option>
     </mat-select>
   </mat-form-field>
 </mat-dialog-content>

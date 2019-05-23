@@ -9,15 +9,22 @@ import { SearchCriteria } from './model/search-criteria';
 })
 export class AdService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.jsEnvironements = [
+      new JSEnvironment("Production", "https://open-api.dev.services.jtech.se", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U"),
+      new JSEnvironment("Staging", "https://staging-jobs.dev.services.jtech.se", "apa"),
+      new JSEnvironment("Dev", "https://dev-open-api.dev.services.jtech.se/", "apa"),
+      new JSEnvironment("i1", "https://i1-open-api.dev.services.jtech.se/", "apa")
+    ]
+    this.selectedEnvironment = this.jsEnvironements[0]
+   }
 
-  developUrl = 'https://dev-open-api.dev.services.jtech.se/';
-  productionUrl = 'https://open-api.dev.services.jtech.se';
-  adsUrl = this.productionUrl
+  jsEnvironements: JSEnvironment[]
+  selectedEnvironment: JSEnvironment
 
   getAds(request: SearchAdRequest): Observable<SearchAdResponse> {
     const headerDict = {
-      'api-key': 'apa'
+      'api-key': this.selectedEnvironment.apiKey
     }
     let httpParams = new HttpParams()
     if (request.term) {
@@ -38,7 +45,7 @@ export class AdService {
       headers: new HttpHeaders(headerDict),
       params: httpParams
     }
-    return this.http.get<SearchAdResponse>(`${this.adsUrl}/search`, requestOptions);
+    return this.http.get<SearchAdResponse>(`${this.selectedEnvironment.url}/search`, requestOptions);
   }
 
   complete(term: string, request: SearchAdRequest): Observable<CompleteResponse> {
@@ -46,7 +53,7 @@ export class AdService {
       return of(new CompleteResponse());
     }
     const headerDict = {
-      'api-key': 'apa'
+      'api-key': this.selectedEnvironment.apiKey
     }
 
     let httpParams = new HttpParams()
@@ -63,7 +70,7 @@ export class AdService {
       params: httpParams
     }
 
-    return this.http.get<CompleteResponse>(`${this.adsUrl}/complete`, requestOptions);
+    return this.http.get<CompleteResponse>(`${this.selectedEnvironment.url}/complete`, requestOptions);
   }
 
   criteriaSearch(term: string): Observable<CriteriaSearchResponse> {
@@ -71,7 +78,7 @@ export class AdService {
       return NEVER
     }
     const headerDict = {
-      'api-key': 'apa'
+      'api-key': this.selectedEnvironment.apiKey
     }
 
     let httpParams = new HttpParams()
@@ -81,7 +88,7 @@ export class AdService {
       params: httpParams
     }
 
-    return this.http.get<CriteriaSearchResponse>(`${this.adsUrl}/taxonomy/search`, requestOptions);
+    return this.http.get<CriteriaSearchResponse>(`${this.selectedEnvironment.url}/taxonomy/search`, requestOptions);
   }
 }
 
@@ -129,4 +136,16 @@ export class VfSearchCriteria {
   typ: string
   type: string
   parentId: string
+}
+
+export class JSEnvironment {
+  title: string
+  url: string
+  apiKey: string
+
+  constructor(title: string, url: string, apiKey: string) {
+    this.title = title
+    this.url = url
+    this.apiKey = apiKey
+  }
 }
