@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule }    from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatInputModule, MatFormFieldModule, MatToolbarModule, MatListModule, MatAutocompleteModule, MatProgressSpinnerModule, MatExpansionModule, MatChipsModule, MatCardModule, MatBadgeModule, MatIconModule, MatDialogModule, MatSelectModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatFormFieldModule, MatToolbarModule, MatListModule, MatAutocompleteModule, MatProgressSpinnerModule, MatExpansionModule, MatChipsModule, MatCardModule, MatBadgeModule, MatIconModule, MatDialogModule, MatSelectModule, MatSidenavModule } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { RouterModule, Routes } from '@angular/router';
 
@@ -37,7 +37,7 @@ const appRoutes: Routes = [
     MatButtonModule, MatInputModule, MatFormFieldModule, MatProgressSpinnerModule,
     MatToolbarModule, MatListModule, MatAutocompleteModule, MatExpansionModule,
     FlexLayoutModule, MatChipsModule, MatCardModule, MatBadgeModule, MatIconModule,
-    MatDialogModule, MatSelectModule,
+    MatDialogModule, MatSelectModule, MatSidenavModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
