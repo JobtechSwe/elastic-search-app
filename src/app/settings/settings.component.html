@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Inställningar</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Driftsmiljö</mat-label>
+    <mat-select [(value)]="this.adService.adsUrl">
+      <mat-option [(value)]="this.adService.developUrl">Utveckling</mat-option>
+      <mat-option [(value)]="this.adService.productionUrl">Produktion</mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Stäng</button>
+</mat-dialog-actions>

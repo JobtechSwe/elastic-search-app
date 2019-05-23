@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { SettingsComponent } from './settings/settings.component';
 
 declare let ga: Function
 
@@ -11,7 +13,7 @@ declare let ga: Function
 export class AppComponent {
   title = 'Simple Elastic Search';
 
-  constructor(public router: Router) {
+  constructor(public router: Router, public dialog: MatDialog) {
 
     // subscribe to router events and send page views to Google Analytics
     this.router.events.subscribe(event => {
@@ -22,6 +24,12 @@ export class AppComponent {
 
       }
 
+    });
+  }
+
+  openSettingsDialog() {
+    const dialogRef = this.dialog.open(SettingsComponent, {
+      width: '250px'
     });
   }
 }

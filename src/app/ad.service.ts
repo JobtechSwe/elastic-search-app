@@ -11,8 +11,8 @@ export class AdService {
 
   constructor(private http: HttpClient) { }
 
-  private developUrl = 'https://develop-sokannonser.dev.services.jtech.se';
-  private productionUrl = 'https://open-api.dev.services.jtech.se';
+  developUrl = 'https://dev-open-api.dev.services.jtech.se/';
+  productionUrl = 'https://open-api.dev.services.jtech.se';
   adsUrl = this.productionUrl
 
   getAds(request: SearchAdRequest): Observable<SearchAdResponse> {
