@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule }    from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule, MatInputModule, MatFormFieldModule, MatToolbarModule, MatListModule, MatAutocompleteModule, MatProgressSpinnerModule, MatExpansionModule, MatChipsModule, MatCardModule, MatBadgeModule, MatIconModule, MatDialogModule, MatSelectModule, MatSidenavModule } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { RouterModule, Routes } from '@angular/router';
@@ -33,7 +33,7 @@ const appRoutes: Routes = [
     SettingsComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule, BrowserAnimationsModule, ReactiveFormsModule,
+    BrowserModule, HttpClientModule, BrowserAnimationsModule, ReactiveFormsModule, FormsModule,
     MatButtonModule, MatInputModule, MatFormFieldModule, MatProgressSpinnerModule,
     MatToolbarModule, MatListModule, MatAutocompleteModule, MatExpansionModule,
     FlexLayoutModule, MatChipsModule, MatCardModule, MatBadgeModule, MatIconModule,

@@ -21,6 +21,7 @@ export class AdService {
 
   jsEnvironements: JSEnvironment[]
   selectedEnvironment: JSEnvironment
+  statsLimit: number = null
 
   getAds(request: SearchAdRequest): Observable<SearchAdResponse> {
     const headerDict = {
@@ -30,7 +31,9 @@ export class AdService {
     if (request.term) {
       httpParams = httpParams.set('q', request.term)
     }
-    httpParams = httpParams.set('stats.limit', '20')
+    if (this.statsLimit != null) {
+      httpParams = httpParams.set('stats.limit', this.statsLimit.toString())
+    }
     request.stats.forEach(element => {
       httpParams = httpParams.append('stats', element)
     })
