@@ -1,0 +1,47 @@
+<mat-accordion *ngIf="(searchResult$ | async) as searchResult">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Freetext concepts
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div *ngIf="searchResult.freeTextConcepts.location.join(', ') as location">
+      <span class="mat-caption">location: </span><span>{{ location }}</span>
+    </div>
+    <div *ngIf="searchResult.freeTextConcepts.location_must.join(', ') as location_must">
+      <span class="mat-caption">location_must: </span><span>{{ location_must }}</span>
+    </div>
+    <div *ngIf="searchResult.freeTextConcepts.location_must_not.join(', ') as location_must_not">
+      <span class="mat-caption">location_must_not: </span><span>{{ location_must_not }}</span>
+    </div>
+    <div *ngIf="searchResult.freeTextConcepts.occupation.join() as occupation">
+      <span class="mat-caption">occupation: </span><span>{{ occupation }}</span>
+    </div>
+    <div *ngIf="searchResult.freeTextConcepts.occupation_must.join() as occupation_must">
+      <span class="mat-caption">occupation_must: </span><span>{{ occupation_must }}</span>
+    </div>
+    <div *ngIf="searchResult.freeTextConcepts.occupation_must_not.join() as occupation_must_not">
+      <span class="mat-caption">occupation_must_not: </span><span>{{ occupation_must_not }}</span>
+    </div>
+    <div *ngIf="searchResult.freeTextConcepts.skill.join() as skill">
+      <span class="mat-caption">skill: </span><span>{{ skill }}</span>
+    </div>
+    <div *ngIf="searchResult.freeTextConcepts.skill_must.join() as skill_must">
+      <span class="mat-caption">skill_must: </span><span>{{ skill_must }}</span>
+    </div>
+    <div *ngIf="searchResult.freeTextConcepts.skill_must_not.join() as skill_must_not">
+      <span class="mat-caption">skill_must_not: </span><span>{{ skill_must_not }}</span>
+    </div>
+    <div *ngIf="searchResult.freeTextConcepts.trait.join() as trait">
+      <span class="mat-caption">trait: </span><span>{{ trait }}</span>
+    </div>
+    <div *ngIf="searchResult.freeTextConcepts.trait_must.join() as trait_must">
+      <span class="mat-caption">trait_must: </span><span>{{ trait_must }}</span>
+    </div>
+    <div *ngIf="searchResult.freeTextConcepts.trait_must_not.join() as trait_must_not">
+      <span class="mat-caption">trait_must_not: </span><span>{{ trait_must_not }}</span>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

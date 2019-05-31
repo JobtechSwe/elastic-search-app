@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AdService, SearchAdRequest, SearchStats } from './ad.service';
+import { AdService, SearchAdRequest, SearchStats, SearchAdResponse, FreeTextConcepts } from './ad.service';
 import { Observable, Subject, NEVER } from 'rxjs';
 import { SearchCriteria } from './model/search-criteria';
 import { MatListOption } from '@angular/material';
@@ -58,6 +58,7 @@ export class AdsearchService {
             viewModel.statsOccupation = statsValueViewModel(occupationStat)
           }
         }
+        viewModel.freeTextConcepts = response.freetext_concepts
         return viewModel
       }),
       tap(() => this.loading = false)
@@ -109,13 +110,13 @@ function statsValueViewModel(searchStats: SearchStats): Array<StatsValueViewMode
   return statsGroup
 }
 
-
 export class SearchResultViewModel {
   total: number
   hits: Array<AdViewModel>
   statsOccupation: Array<StatsValueViewModel>
   statsField: Array<StatsValueViewModel>
   statsGroup: Array<StatsValueViewModel>
+  freeTextConcepts: FreeTextConcepts
 }
 
 export class AdViewModel {
