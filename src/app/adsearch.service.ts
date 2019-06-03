@@ -41,6 +41,12 @@ export class AdsearchService {
             viewModel.occupationName = ad.occupation.label
             viewModel.occupationField = ad.occupation_field.label
             viewModel.occupationGroup = ad.occupation_group.label
+            viewModel.keywords = {
+              employer: ad.keywords.extracted.employer,
+              location: ad.keywords.extracted.location,
+              occupation: ad.keywords.extracted.occupation,
+              skill: ad.keywords.extracted.skill
+            }
             return viewModel
           })
         }
@@ -126,6 +132,12 @@ export class AdViewModel {
   occupationName: string
   occupationField: string
   occupationGroup: string
+  keywords: {
+    employer: Array<string>
+    location: Array<string>
+    occupation: Array<string>
+    skill: Array<string>
+  }
 }
 
 export class StatsValueViewModel {

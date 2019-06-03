@@ -6,8 +6,17 @@
         <mat-card-title>{{ad.headline}}</mat-card-title>
         <mat-card-subtitle>ID: {{ad.id}}</mat-card-subtitle>
         <mat-card-content>
-          {{ad.occupationName}} - {{ad.occupationGroup}} - {{ad.occupationField}}
-       </mat-card-content>
+          <div>
+            {{ad.occupationName}} > {{ad.occupationGroup}} > {{ad.occupationField}}
+          </div>
+          <br>
+          <div>keywords:
+            <span class="mat-small" matTooltip="location" *ngFor="let word of ad.keywords.location; let first = first"><span *ngIf="!first"> | </span>{{word}}</span>
+            <span class="mat-small" matTooltip="employer" *ngFor="let word of ad.keywords.employer"> | {{word}}</span>
+            <span class="mat-small" matTooltip="occupation" *ngFor="let word of ad.keywords.occupation"> | {{word}}</span>
+            <span class="mat-small" matTooltip="skill" *ngFor="let word of ad.keywords.skill"> | {{word}}</span>
+          </div>
+        </mat-card-content>
         <mat-card-actions [align]='end'>
           <a mat-button [href]="'https://www.arbetsformedlingen.se/For-arbetssokande/Platsbanken/annonser/' + ad.id"
             target="_blank">ÖPPNA I PLATSBANKEN</a>
