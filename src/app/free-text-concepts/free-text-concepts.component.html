@@ -34,13 +34,13 @@
     <div *ngIf="searchResult.freeTextConcepts.skill_must_not.join() as skill_must_not">
       <span class="mat-caption">skill_must_not: </span><span>{{ skill_must_not }}</span>
     </div>
-    <div *ngIf="searchResult.freeTextConcepts.trait.join() as trait">
+    <div *ngIf="(searchResult.freeTextConcepts.trait) || [].join() as trait">
       <span class="mat-caption">trait: </span><span>{{ trait }}</span>
     </div>
-    <div *ngIf="searchResult.freeTextConcepts.trait_must.join() as trait_must">
+    <div *ngIf="(searchResult.freeTextConcepts.trait_must || []).join() as trait_must">
       <span class="mat-caption">trait_must: </span><span>{{ trait_must }}</span>
     </div>
-    <div *ngIf="searchResult.freeTextConcepts.trait_must_not.join() as trait_must_not">
+    <div *ngIf="(searchResult.freeTextConcepts.trait_must_not || []).join() as trait_must_not">
       <span class="mat-caption">trait_must_not: </span><span>{{ trait_must_not }}</span>
     </div>
   </mat-expansion-panel>

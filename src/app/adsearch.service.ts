@@ -16,7 +16,7 @@ export class AdsearchService {
   currentSearch = new SearchAdRequest()
 
   private searchRequest = new Subject<SearchAdRequest>()
-  
+
   constructor(private adService: AdService) {
     this.clearSearch()
     this.searchResult$ = this.searchRequest.pipe(
@@ -41,11 +41,20 @@ export class AdsearchService {
             viewModel.occupationName = ad.occupation.label
             viewModel.occupationField = ad.occupation_field.label
             viewModel.occupationGroup = ad.occupation_group.label
-            viewModel.keywords = {
-              employer: ad.keywords.extracted.employer,
-              location: ad.keywords.extracted.location,
-              occupation: ad.keywords.extracted.occupation,
-              skill: ad.keywords.extracted.skill
+            if (ad.keywords) {
+              viewModel.keywords = {
+                employer: ad.keywords.extracted.employer || [],
+                location: ad.keywords.extracted.location || [],
+                occupation: ad.keywords.extracted.occupation || [],
+                skill: ad.keywords.extracted.skill || []
+              }
+            } else {
+              viewModel.keywords = {
+                employer: [],
+                location: [],
+                occupation: [],
+                skill: []
+              }
             }
             return viewModel
           })
@@ -69,7 +78,7 @@ export class AdsearchService {
       }),
       tap(() => this.loading = false)
     )
-   }
+  }
 
   search(): void {
     this.searchRequest.next(this.currentSearch)

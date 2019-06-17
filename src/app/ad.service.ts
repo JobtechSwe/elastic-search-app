@@ -155,16 +155,16 @@ export class JSEnvironment {
 }
 
 export class FreeTextConcepts {
-  location: Array<string>
-  location_must: Array<string>
-  location_must_not: Array<string>
-  occupation: Array<string>
-  occupation_must: Array<string>
-  occupation_must_not: Array<string>
-  skill: Array<string>
-  skill_must: Array<string>
-  skill_must_not: Array<string>
-  trait: Array<string>
-  trait_must: Array<string>
-  trait_must_not: Array<string>
+  location: Array<string> = []
+  location_must: Array<string> = []
+  location_must_not: Array<string> = []
+  occupation: Array<string> = []
+  occupation_must: Array<string> = []
+  occupation_must_not: Array<string> = []
+  skill: Array<string> = []
+  skill_must: Array<string> = []
+  skill_must_not: Array<string> = []
+  trait: Array<string> = []
+  trait_must: Array<string> = []
+  trait_must_not: Array<string> = []
 }
