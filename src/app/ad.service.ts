@@ -17,11 +17,13 @@ export class AdService {
       new JSEnvironment("i1", "https://i1-open-api.dev.services.jtech.se/", "apa")
     ]
     this.selectedEnvironment = this.jsEnvironements[0]
+    this.adLimit = 10
    }
 
   jsEnvironements: JSEnvironment[]
   selectedEnvironment: JSEnvironment
   statsLimit: number = null
+  adLimit: number = null
 
   getAds(request: SearchAdRequest): Observable<SearchAdResponse> {
     const headerDict = {
@@ -34,6 +36,9 @@ export class AdService {
     if (this.statsLimit != null) {
       httpParams = httpParams.set('stats.limit', this.statsLimit.toString())
     }
+
+    httpParams = httpParams.set('limit', this.adLimit.toString())
+
     request.stats.forEach(element => {
       httpParams = httpParams.append('stats', element)
     })
@@ -99,6 +104,7 @@ export class SearchAdRequest {
   term: string
   stats: Array<string>
   criterias: Array<SearchCriteria>
+  limit: number = 10
 }
 
 export class SearchStatsValue {
