@@ -10,12 +10,18 @@
             {{ad.occupationName}} > {{ad.occupationGroup}} > {{ad.occupationField}}
           </div>
           <br>
-          <div>keywords:
-            <span class="mat-small" matTooltip="location" *ngFor="let word of ad.keywords.location; let first = first"><span *ngIf="!first"> | </span>{{word}}</span>
-            <span class="mat-small" matTooltip="employer" *ngFor="let word of ad.keywords.employer"> | {{word}}</span>
-            <span class="mat-small" matTooltip="occupation" *ngFor="let word of ad.keywords.occupation"> | {{word}}</span>
-            <span class="mat-small" matTooltip="skill" *ngFor="let word of ad.keywords.skill"> | {{word}}</span>
-          </div>
+          <div class="mat-caption">Must have:</div>
+          <mat-chip-list>
+              <mat-chip *ngFor="let word of ad.must_have.skills">{{word.label}}</mat-chip>
+              <mat-chip *ngFor="let word of ad.must_have.languages">{{word.label}}</mat-chip>
+              <mat-chip *ngFor="let word of ad.must_have.work_experiences">{{word.label}}</mat-chip>
+            </mat-chip-list>
+            <div class="mat-caption">Nice to have:</div>
+          <mat-chip-list>
+              <mat-chip *ngFor="let word of ad.nice_to_have.skills">{{word.label}}</mat-chip>
+              <mat-chip *ngFor="let word of ad.nice_to_have.languages">{{word.label}}</mat-chip>
+              <mat-chip *ngFor="let word of ad.nice_to_have.work_experiences">{{word.label}}</mat-chip>
+            </mat-chip-list>
         </mat-card-content>
         <mat-card-actions [align]='end'>
           <a mat-button [href]="'https://www.arbetsformedlingen.se/For-arbetssokande/Platsbanken/annonser/' + ad.id"

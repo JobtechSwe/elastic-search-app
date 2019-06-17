@@ -4,6 +4,7 @@ import { Observable, Subject, NEVER } from 'rxjs';
 import { SearchCriteria } from './model/search-criteria';
 import { MatListOption } from '@angular/material';
 import { tap, switchMap, catchError, map } from 'rxjs/operators';
+import { ReqValue } from './model/ad';
 
 @Injectable({
   providedIn: 'root'
@@ -41,21 +42,8 @@ export class AdsearchService {
             viewModel.occupationName = ad.occupation.label
             viewModel.occupationField = ad.occupation_field.label
             viewModel.occupationGroup = ad.occupation_group.label
-            if (ad.keywords) {
-              viewModel.keywords = {
-                employer: ad.keywords.extracted.employer || [],
-                location: ad.keywords.extracted.location || [],
-                occupation: ad.keywords.extracted.occupation || [],
-                skill: ad.keywords.extracted.skill || []
-              }
-            } else {
-              viewModel.keywords = {
-                employer: [],
-                location: [],
-                occupation: [],
-                skill: []
-              }
-            }
+            viewModel.must_have = ad.must_have
+            viewModel.nice_to_have = ad.nice_to_have
             return viewModel
           })
         }
@@ -141,11 +129,15 @@ export class AdViewModel {
   occupationName: string
   occupationField: string
   occupationGroup: string
-  keywords: {
-    employer: Array<string>
-    location: Array<string>
-    occupation: Array<string>
-    skill: Array<string>
+  must_have: {
+    skills: [ReqValue],
+    languages: [ReqValue],
+    work_experiences: [ReqValue]
+  }
+  nice_to_have: {
+    skills: [ReqValue],
+    languages: [ReqValue],
+    work_experiences: [ReqValue]
   }
 }
 

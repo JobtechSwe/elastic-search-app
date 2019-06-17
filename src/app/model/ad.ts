@@ -5,7 +5,16 @@ export class Ad {
   occupation: OccupationValue
   occupation_field: OccupationValue
   occupation_group: OccupationValue
-  keywords: AdKeywords
+  must_have: {
+    skills: [ReqValue],
+    languages: [ReqValue],
+    work_experiences: [ReqValue]
+  }
+  nice_to_have: {
+    skills: [ReqValue],
+    languages: [ReqValue],
+    work_experiences: [ReqValue]
+  }
 }
 
 export class AdDescription {
@@ -16,13 +25,6 @@ export class OccupationValue {
   label: string
 }
 
-export class AdKeywords {
-  extracted: AdExtractedKeywords
-}
-
-export class AdExtractedKeywords {
-  employer: Array<string>
-  location: Array<string>
-  occupation: Array<string>
-  skill: Array<string>
+export class ReqValue {
+  label: string
 }
