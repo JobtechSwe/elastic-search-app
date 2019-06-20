@@ -15,6 +15,16 @@ export class Ad {
     languages: [ReqValue],
     work_experiences: [ReqValue]
   }
+  employer: {
+    name: string
+    workplace: string
+  }
+  workplace_address: {
+    country: string
+    municipality: string
+    region: string
+    city: string
+  }
 }
 
 export class AdDescription {

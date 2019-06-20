@@ -44,6 +44,8 @@ export class AdsearchService {
             viewModel.occupationGroup = ad.occupation_group.label
             viewModel.must_have = ad.must_have
             viewModel.nice_to_have = ad.nice_to_have
+            viewModel.employer = ad.employer
+            viewModel.workplace_address = ad.workplace_address
             return viewModel
           })
         }
@@ -138,6 +140,16 @@ export class AdViewModel {
     skills: [ReqValue],
     languages: [ReqValue],
     work_experiences: [ReqValue]
+  }
+  employer: {
+    name: string
+    workplace: string
+  }
+  workplace_address: {
+    country: string
+    municipality: string
+    region: string
+    city: string
   }
 }
 
