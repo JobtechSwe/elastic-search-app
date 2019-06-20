@@ -10,13 +10,11 @@
             {{ad.occupationName}} > {{ad.occupationGroup}} > {{ad.occupationField}}
           </div>
           <br>
-          <div class="mat-caption">Must have:</div>
           <mat-chip-list>
-              <mat-chip *ngFor="let word of ad.must_have.skills">{{word.label}}</mat-chip>
-              <mat-chip *ngFor="let word of ad.must_have.languages">{{word.label}}</mat-chip>
-              <mat-chip *ngFor="let word of ad.must_have.work_experiences">{{word.label}}</mat-chip>
+              <mat-chip color="primary" *ngFor="let word of ad.must_have.skills">{{word.label}}</mat-chip>
+              <mat-chip color="primary" *ngFor="let word of ad.must_have.languages">{{word.label}}</mat-chip>
+              <mat-chip color="primary" *ngFor="let word of ad.must_have.work_experiences">{{word.label}}</mat-chip>
             </mat-chip-list>
-            <div class="mat-caption">Nice to have:</div>
           <mat-chip-list>
               <mat-chip *ngFor="let word of ad.nice_to_have.skills">{{word.label}}</mat-chip>
               <mat-chip *ngFor="let word of ad.nice_to_have.languages">{{word.label}}</mat-chip>
