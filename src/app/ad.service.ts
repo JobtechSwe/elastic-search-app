@@ -65,7 +65,7 @@ export class AdService {
     }
 
     let httpParams = new HttpParams()
-    httpParams = httpParams.set('q', term.toLocaleLowerCase())
+    httpParams = httpParams.set('q', term)
     if (request.criterias != undefined) {
       request.criterias.forEach(element => {
         let type = element.type
