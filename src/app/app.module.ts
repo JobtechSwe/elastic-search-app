@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule }    from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatButtonModule, MatInputModule, MatFormFieldModule, MatToolbarModule, MatListModule, MatAutocompleteModule, MatProgressSpinnerModule, MatExpansionModule, MatChipsModule, MatCardModule, MatBadgeModule, MatIconModule, MatDialogModule, MatSelectModule, MatSidenavModule, MatTooltipModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatFormFieldModule, MatToolbarModule, MatListModule, MatAutocompleteModule, MatProgressSpinnerModule, MatExpansionModule, MatChipsModule, MatCardModule, MatBadgeModule, MatIconModule, MatDialogModule, MatSelectModule, MatSidenavModule, MatTooltipModule, MatSliderModule, MatGridListModule } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { RouterModule, Routes } from '@angular/router';
 
@@ -16,6 +16,7 @@ import { SearchResultComponent } from './search-result/search-result.component';
 import { SearchStatsComponent } from './search-stats/search-stats.component';
 import { SettingsComponent } from './settings/settings.component';
 import { FreeTextConceptsComponent } from './free-text-concepts/free-text-concepts.component';
+import { SearchOptionsComponent } from './search-options/search-options.component';
 
 const appRoutes: Routes = [
   { path: '', component: AdsComponent },
@@ -32,14 +33,16 @@ const appRoutes: Routes = [
     SearchResultComponent,
     SearchStatsComponent,
     SettingsComponent,
-    FreeTextConceptsComponent
+    FreeTextConceptsComponent,
+    SearchOptionsComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, BrowserAnimationsModule, ReactiveFormsModule, FormsModule,
     MatButtonModule, MatInputModule, MatFormFieldModule, MatProgressSpinnerModule,
     MatToolbarModule, MatListModule, MatAutocompleteModule, MatExpansionModule,
     FlexLayoutModule, MatChipsModule, MatCardModule, MatBadgeModule, MatIconModule,
-    MatDialogModule, MatSelectModule, MatSidenavModule, MatTooltipModule,
+    MatDialogModule, MatSelectModule, MatSidenavModule, MatTooltipModule, MatSliderModule,
+    MatGridListModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only

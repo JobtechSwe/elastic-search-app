@@ -5,11 +5,15 @@
     <app-criteria-box (onChange)="searchService.updateCriterias($event)" [selectedCriterias]="searchService.currentSearch.criterias">
     </app-criteria-box>
   </mat-card>
+  <mat-card>
+      <app-search-options></app-search-options>
+  </mat-card>
   <div fxLayout="column" fxLayoutAlign=" center">
     <div *ngIf="searchService.searchError">Ett fel uppstod vid sökning!</div>
     <mat-spinner *ngIf="searchService.loading"></mat-spinner>
   </div>
   <app-free-text-concepts [searchResult$]="searchService.searchResult$"></app-free-text-concepts>
   <app-search-stats [searchResult$]="searchService.searchResult$" (selectedStats)="searchService.selectStats($event)"></app-search-stats>
+  
   <app-search-result [searchResult$]="searchService.searchResult$"></app-search-result>
 </div>
