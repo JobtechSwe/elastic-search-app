@@ -17,6 +17,14 @@
   <mat-form-field>
     <input type="number" matInput placeholder="Relevance threshold" [(ngModel)]="this.adService.relevanceThreshold">
   </mat-form-field>
+  <mat-form-field>
+    <mat-label>Sortering</mat-label>
+    <mat-select [(value)]="this.adService.sortOrder">
+      <mat-option *ngFor="let order of this.adService.availibleSortOrders" [value]="order">
+        {{order}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Stäng</button>

@@ -25,6 +25,8 @@ export class AdService {
   statsLimit: number = null
   adLimit: number = null
   relevanceThreshold: number = null
+  availibleSortOrders = ["relevance", "pubdate-desc", "pubdate-asc", "applydate-desc", "applydate-asc", "updated"]
+  sortOrder: string = null
 
   getAds(request: SearchAdRequest): Observable<SearchAdResponse> {
     const headerDict = {
@@ -39,6 +41,9 @@ export class AdService {
     }
     if (this.relevanceThreshold != null) {
       httpParams = httpParams.set('relevance-threshold', this.relevanceThreshold.toString())
+    }
+    if (this.sortOrder != null) {
+      httpParams = httpParams.set('sort', this.sortOrder)
     }
 
     httpParams = httpParams.set('limit', this.adLimit.toString())
