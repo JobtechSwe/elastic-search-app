@@ -9,11 +9,14 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field>
-      <input type="number" matInput placeholder="Stats limit" [(ngModel)]="this.adService.statsLimit">
-    </mat-form-field>
-    <mat-form-field>
-        <input type="number" matInput placeholder="Result limit" [(ngModel)]="this.adService.adLimit">
-      </mat-form-field>
+    <input type="number" matInput placeholder="Stats limit" [(ngModel)]="this.adService.statsLimit">
+  </mat-form-field>
+  <mat-form-field>
+    <input type="number" matInput placeholder="Result limit" [(ngModel)]="this.adService.adLimit">
+  </mat-form-field>
+  <mat-form-field>
+    <input type="number" matInput placeholder="Relevance threshold" [(ngModel)]="this.adService.relevanceThreshold">
+  </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Stäng</button>

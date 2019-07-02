@@ -24,6 +24,7 @@ export class AdService {
   selectedEnvironment: JSEnvironment
   statsLimit: number = null
   adLimit: number = null
+  relevanceThreshold: number = null
 
   getAds(request: SearchAdRequest): Observable<SearchAdResponse> {
     const headerDict = {
@@ -35,6 +36,9 @@ export class AdService {
     }
     if (this.statsLimit != null) {
       httpParams = httpParams.set('stats.limit', this.statsLimit.toString())
+    }
+    if (this.relevanceThreshold != null) {
+      httpParams = httpParams.set('relevance-threshold', this.relevanceThreshold.toString())
     }
 
     httpParams = httpParams.set('limit', this.adLimit.toString())
