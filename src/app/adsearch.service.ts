@@ -36,6 +36,7 @@ export class AdsearchService {
         if (response.hits) {
           viewModel.hits = response.hits.map(ad => {
             let viewModel = new AdViewModel()
+            viewModel.relevance = ad.relevance
             viewModel.headline = ad.headline
             viewModel.id = ad.id
             viewModel.text = ad.description.text.substring(0, 200) + "..."
@@ -125,6 +126,7 @@ export class SearchResultViewModel {
 }
 
 export class AdViewModel {
+  relevance: number
   id: number
   headline: string
   text: string

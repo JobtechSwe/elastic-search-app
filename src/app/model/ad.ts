@@ -1,4 +1,5 @@
 export class Ad {
+  relevance: number
   id: number
   headline: string
   description: AdDescription

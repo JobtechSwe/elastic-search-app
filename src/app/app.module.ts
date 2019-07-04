@@ -17,6 +17,7 @@ import { SearchStatsComponent } from './search-stats/search-stats.component';
 import { SettingsComponent } from './settings/settings.component';
 import { FreeTextConceptsComponent } from './free-text-concepts/free-text-concepts.component';
 import { SearchOptionsComponent } from './search-options/search-options.component';
+import { SearchResultItemComponent } from './search-result-item/search-result-item.component';
 
 const appRoutes: Routes = [
   { path: '', component: AdsComponent },
@@ -34,7 +35,8 @@ const appRoutes: Routes = [
     SearchStatsComponent,
     SettingsComponent,
     FreeTextConceptsComponent,
-    SearchOptionsComponent
+    SearchOptionsComponent,
+    SearchResultItemComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, BrowserAnimationsModule, ReactiveFormsModule, FormsModule,

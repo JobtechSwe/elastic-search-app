@@ -2,33 +2,9 @@
   <div *ngIf="searchResult.hits.length && !loading">
     <h3 mat-subheader>Annonser: {{ searchResult.total.value }}</h3>
     <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
-      <mat-card *ngFor="let ad of searchResult.hits">
-        <mat-card-title>{{ad.headline}}</mat-card-title>
-        <mat-card-subtitle>
-          ID: <b>{{ad.id}}</b> | AG: <b>{{ad.employer.name}}</b> | ARB: <b>{{ad.employer.workplace}}</b> | LAND: <b>{{ad.workplace_address.country}}</b> |
-          KOMMUN: <b>{{ad.workplace_address.municipality}}</b> | REGION: <b>{{ad.workplace_address.region}}</b> | CITY: <b>{{ad.workplace_address.city}}</b>
-        </mat-card-subtitle>
-        <mat-card-content>
-          <div>
-              {{ad.occupationField}} > {{ad.occupationGroup}} > {{ad.occupationName}}
-          </div>
-          <br>
-          <mat-chip-list>
-              <mat-chip color="primary" *ngFor="let word of ad.must_have.skills">{{word.label}}</mat-chip>
-              <mat-chip color="primary" *ngFor="let word of ad.must_have.languages">{{word.label}}</mat-chip>
-              <mat-chip color="primary" *ngFor="let word of ad.must_have.work_experiences">{{word.label}}</mat-chip>
-            </mat-chip-list>
-          <mat-chip-list>
-              <mat-chip *ngFor="let word of ad.nice_to_have.skills">{{word.label}}</mat-chip>
-              <mat-chip *ngFor="let word of ad.nice_to_have.languages">{{word.label}}</mat-chip>
-              <mat-chip *ngFor="let word of ad.nice_to_have.work_experiences">{{word.label}}</mat-chip>
-            </mat-chip-list>
-        </mat-card-content>
-        <mat-card-actions [align]='end'>
-          <a mat-button [href]="'https://www.arbetsformedlingen.se/For-arbetssokande/Platsbanken/annonser/' + ad.id"
-            target="_blank">ÖPPNA I PLATSBANKEN</a>
-        </mat-card-actions>
-      </mat-card>
+      <div *ngFor="let ad of searchResult.hits">
+        <app-search-result-item [ad]="ad"></app-search-result-item>
+      </div>
     </div>
   </div>
   <div *ngIf="!searchResult.hits.length && !loading" fxLayout="column" fxLayoutAlign=" center">

@@ -1,0 +1,46 @@
+<mat-card>
+  <mat-card-title>{{ad.headline}}</mat-card-title>
+  <mat-card-subtitle>
+    ID: <b>{{ad.id}}</b> | RELEVANS: <b>{{ad.relevance}}</b>
+  </mat-card-subtitle>
+  <mat-card-content>
+    <div *ngIf="!isCollapsed">
+      ARBETSPLATS: <b>{{ad.employer.workplace}}</b> | 
+      KOMMUN: <b>{{ad.workplace_address.municipality}}</b> | 
+      REGION: <b>{{ad.workplace_address.region}}</b> | 
+      CITY: <b>{{ad.workplace_address.city}}</b> | 
+      YRKE: <b>{{ad.occupationName}}</b>
+    </div>
+    <div *ngIf="isCollapsed">
+        <div>
+            <h4 class="cardHeader">Arbetsgivare</h4>
+            NAMN: <b>{{ad.employer.name}}</b>
+          </div>
+      <div>
+        <h4 class="cardHeader">Arbetsplats</h4>
+        NAMN: <b>{{ad.employer.workplace}}</b> | LAND: <b>{{ad.workplace_address.country}}</b> | KOMMUN:
+        <b>{{ad.workplace_address.municipality}}</b> | REGION: <b>{{ad.workplace_address.region}}</b> | CITY:
+        <b>{{ad.workplace_address.city}}</b>
+      </div>
+      <div>
+        <h4 class="cardHeader">Yrkestaxonomi</h4>
+        OMRÅDE: <b>{{ad.occupationField}}</b> | GRUPP: <b>{{ad.occupationGroup}}</b> | YRKE: <b>{{ad.occupationName}}</b>
+      </div>
+      <div>
+        <h4 class="cardHeader">Krav</h4>
+        <span *ngFor="let word of ad.must_have.skills">KUNSKAP: <b>{{word.label}}</b> | </span>
+        <span *ngFor="let word of ad.must_have.languages">SPRÅK: <b>{{word.label}}</b> | </span>
+        <span *ngFor="let word of ad.must_have.work_experiences">ERFARENHET: <b>{{word.label}}</b> | </span>
+        <h4 class="cardHeader">Meriterande</h4>
+        <span *ngFor="let word of ad.nice_to_have.skills">KUNSKAP: <b>{{word.label}}</b> | </span>
+        <span *ngFor="let word of ad.nice_to_have.languages">SPRÅK: <b>{{word.label}}</b> | </span>
+        <span *ngFor="let word of ad.nice_to_have.work_experiences">ERFARENHET: <b>{{word.label}}</b> | </span>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions [align]='end'>
+    <button mat-flat-button *ngIf="!isCollapsed" (click)="isCollapsed = !isCollapsed">VISA MER</button>
+    <a mat-button [href]="'https://www.arbetsformedlingen.se/For-arbetssokande/Platsbanken/annonser/' + ad.id"
+      target="_blank">ÖPPNA I PLATSBANKEN</a>
+  </mat-card-actions>
+</mat-card>
