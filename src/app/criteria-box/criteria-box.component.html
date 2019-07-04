@@ -1,5 +1,5 @@
 <mat-form-field fxFill appearance="outline">
-    <mat-label>Sök kriterie</mat-label>
+    <mat-label>Strukturerade kriterier</mat-label>
     <mat-chip-list #criteriaList>
       <mat-chip
         *ngFor="let criteria of selectedCriterias"
@@ -10,7 +10,7 @@
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
       <input
-        placeholder="Skriv in kriteria..."
+        placeholder="Sök i värdeförråd"
         #criteriaInput
         [formControl]="criteriaCtrl"
         [matAutocomplete]="auto"
