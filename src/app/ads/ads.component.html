@@ -5,9 +5,9 @@
     <app-criteria-box (onChange)="searchService.updateCriterias($event)" [selectedCriterias]="searchService.currentSearch.criterias">
     </app-criteria-box>
   </mat-card>
-  <mat-card>
+  <div class="flowBox">
       <app-search-options></app-search-options>
-  </mat-card>
+  </div>
   <div fxLayout="column" fxLayoutAlign=" center">
     <div *ngIf="searchService.searchError">Ett fel uppstod vid sökning!</div>
     <mat-spinner *ngIf="searchService.loading"></mat-spinner>
