@@ -18,10 +18,13 @@ import { SettingsComponent } from './settings/settings.component';
 import { FreeTextConceptsComponent } from './free-text-concepts/free-text-concepts.component';
 import { SearchOptionsComponent } from './search-options/search-options.component';
 import { SearchResultItemComponent } from './search-result-item/search-result-item.component';
+import { IFAUExplorerComponent } from './ifauexplorer/ifauexplorer.component';
+import { AdListItemComponent } from './ad-list-item/ad-list-item.component';
 
 const appRoutes: Routes = [
   { path: '', component: AdsComponent },
   { path: 'simplesearch', component: SimpleSearchComponent },
+  { path: 'ifauexplorer', component: IFAUExplorerComponent},
 ];
 
 @NgModule({
@@ -36,7 +39,9 @@ const appRoutes: Routes = [
     SettingsComponent,
     FreeTextConceptsComponent,
     SearchOptionsComponent,
-    SearchResultItemComponent
+    SearchResultItemComponent,
+    IFAUExplorerComponent,
+    AdListItemComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, BrowserAnimationsModule, ReactiveFormsModule, FormsModule,

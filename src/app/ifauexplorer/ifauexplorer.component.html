@@ -1,0 +1,22 @@
+<h1>IFAU Explorer</h1>
+<div>
+  <span>Past clicks </span>
+  <input type="file" class="upload" (change)="uploadPastClicks($event.target.files)">
+</div>
+<div>
+    <span>Recomendations </span>
+    <input type="file" class="upload" (change)="uploadRecomendations($event.target.files)">
+  </div>
+<div *ngIf="(users$ | async) as users">
+  <div *ngFor="let user of users">
+    DeviceID: {{user.deviceid}}<br>
+    Clicks:
+    <ul>
+      <li *ngFor="let adClick of user.adClicks"><app-ad-list-item [adID]="adClick.adid"></app-ad-list-item></li>
+    </ul>
+    Recomendations:
+    <ul>
+      <li *ngFor="let adRecomendation of user.adRecomendations"><app-ad-list-item [adID]="adRecomendation.adid"></app-ad-list-item></li>
+    </ul>
+  </div>
+</div>
