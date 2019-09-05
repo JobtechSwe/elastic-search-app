@@ -9,6 +9,7 @@
   </div>
 <div *ngIf="(users$ | async) as users">
   <div *ngFor="let user of users">
+    <hr>
     DeviceID: {{user.deviceid}}<br>
     Clicks:
     <ul>
