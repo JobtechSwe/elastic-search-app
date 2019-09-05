@@ -1,1 +1,4 @@
-{{adID}}
+<span *ngIf="(ad$ | async) as ad; else id">{{ad.headline}}</span>
+<ng-template #id>
+    {{adID}}
+</ng-template>

@@ -1,4 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AdService } from '../ad.service';
+import { Observable } from 'rxjs';
+import { Ad } from '../model/ad';
 
 @Component({
   selector: 'app-ad-list-item',
@@ -8,10 +11,12 @@ import { Component, OnInit, Input } from '@angular/core';
 export class AdListItemComponent implements OnInit {
 
   @Input() adID: number
+  ad$: Observable<Ad>
   
-  constructor() { }
+  constructor(private adService: AdService) { }
 
   ngOnInit() {
+    this.ad$ = this.adService.getAd(this.adID)
   }
 
 }

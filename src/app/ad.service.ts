@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Ad } from './model/ad';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, of, NEVER } from 'rxjs';
+//import { Observable, of, NEVER } from 'rxjs';
 import { SearchCriteria } from './model/search-criteria';
+import { Observable, of, NEVER } from 'rxjs';
+import { map, tap, publishReplay, refCount } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +29,34 @@ export class AdService {
   relevanceThreshold: number = null
   availibleSortOrders = ["relevance", "pubdate-desc", "pubdate-asc", "applydate-desc", "applydate-asc", "updated"]
   sortOrder: string = null
+
+  adCache: Map<number, Observable<Ad>> = new Map
+
+  getAd(adid: number): Observable<Ad> {
+    const headerDict = {
+      'api-key': this.selectedEnvironment.apiKey
+    }
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+      params: new HttpParams()
+    }
+
+    let cachedAd = this.adCache.get(adid)
+    console.log('cache count: ' + this.adCache.size)
+    if (cachedAd != undefined) {
+      console.log('use cached ad: ' + adid)
+      let cachedAd = this.adCache.get(adid)
+      return cachedAd
+    } else {
+      let observable =  this.http.get<Ad>(`${this.selectedEnvironment.url}/ad/` + adid, requestOptions).pipe(
+        publishReplay(1)
+        ,refCount()
+      )
+      console.log('cache ad: ' + adid)
+      this.adCache.set(adid, observable)
+      return observable
+    }
+  }
 
   getAds(request: SearchAdRequest): Observable<SearchAdResponse> {
     const headerDict = {
