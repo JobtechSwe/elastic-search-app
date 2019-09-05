@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AdService } from '../ad.service';
 import { Observable, throwError } from 'rxjs';
-import { Ad } from '../model/ad';
 import { catchError } from 'rxjs/operators';
+import { PBAPIService, PBAd } from '../pbapi.service';
 
 @Component({
   selector: 'app-ad-list-item',
@@ -12,10 +11,10 @@ import { catchError } from 'rxjs/operators';
 export class AdListItemComponent implements OnInit {
 
   @Input() adID: number
-  ad$: Observable<Ad>
+  ad$: Observable<PBAd>
   errorObject = null
   
-  constructor(private adService: AdService) { }
+  constructor(private adService: PBAPIService) { }
 
   ngOnInit() {
     this.ad$ = this.adService.getAd(this.adID).pipe(
