@@ -53,6 +53,7 @@ export class IFAUExplorerComponent implements OnInit {
           let data = row.split(',')
           let deviceID = data[1]
           let adID = +data[2]
+          let clickTime = new Date(+data[3])
           if (deviceID != undefined && adID != undefined) {
             let existingUser = users.find(user => user.deviceid === deviceID)
             if (existingUser == undefined) {
@@ -62,6 +63,7 @@ export class IFAUExplorerComponent implements OnInit {
             }
             let adClick = new AdClick()
             adClick.adid = adID
+            adClick.timestamp = clickTime
             existingUser.adClicks.push(adClick)
           } else {
             console.log('Fel: ' + row)

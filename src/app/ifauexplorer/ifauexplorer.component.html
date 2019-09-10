@@ -13,7 +13,7 @@
     DeviceID: {{user.deviceid}}<br>
     Clicks:
     <ul>
-      <li *ngFor="let adClick of user.adClicks"><app-ad-list-item [adID]="adClick.adid"></app-ad-list-item></li>
+      <li *ngFor="let adClick of user.adClicks">{{adClick.timestamp | date : "MM MMM"}} - <app-ad-list-item [adID]="adClick.adid"></app-ad-list-item></li>
     </ul>
     Recomendations:
     <ul>
