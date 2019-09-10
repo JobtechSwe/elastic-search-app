@@ -40,6 +40,7 @@ export class PBAPIService {
 export class PBAd {
   id: number
   rubrik: string
+  sistaAnsokningsdatum: Date
   yrkesroll: {
     id: string
     namn: string
