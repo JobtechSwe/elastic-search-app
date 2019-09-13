@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject, zip } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject, zip, of } from 'rxjs';
+import { map, flatMap } from 'rxjs/operators';
+import { PBAd, PBAPIService } from '../pbapi.service';
 
 @Component({
   selector: 'app-ifauexplorer',
@@ -10,15 +11,70 @@ import { map } from 'rxjs/operators';
 export class IFAUExplorerComponent implements OnInit {
   title = 'ifau-test';
   users$: Observable<User[]>
-  private pastClickSubject = new Subject<User[]>()
+  private pastClickSubject = new Subject<Array<User>>()
   private recomendationsSubject = new Subject<User[]>()
 
-  constructor() {
-    
+  constructor(private adService: PBAPIService) {
+
   }
 
   ngOnInit() {
-    this.users$ = zip(this.pastClickSubject, this.recomendationsSubject).pipe(
+    let enrichedPastClicks = this.pastClickSubject.pipe(
+      flatMap(data => {
+        let userIds = data.map(user => {
+          return user.adClicks.map(click => { return click.adid })
+        })
+        let allAdIds: Array<number> = [].concat.apply([], userIds)
+        //console.log('userIds: ' + userIds)
+        //console.log('allAdIds: ' + allAdIds)
+        return this.adService.getAds(allAdIds).pipe(
+          map(ads => {
+            //console.log('ads' + ads.map(ad => { return ad.rubrik}))
+            data.forEach(value => {
+              //console.log('value: ' + value.deviceid)
+              value.adClicks.forEach(adClick => {
+                //console.log('adClick: ' + adClick.adid)
+                adClick.ad = ads.find(ad => {
+                  return ad.id == adClick.adid
+                })
+                //console.log('adClick.ad.id: ' + adClick.ad.id)
+              })
+            })
+            //console.log('data: ' + data)
+            return data
+          })
+        )
+      })
+    )
+
+    let enrichedRecomendations = this.recomendationsSubject.pipe(
+      flatMap(data => {
+        let userIds = data.map(user => {
+          return user.adRecomendations.map(recomendation => { return recomendation.adid })
+        })
+        let allAdIds: Array<number> = [].concat.apply([], userIds)
+        return this.adService.getAds(allAdIds).pipe(
+          map(ads => {
+            //console.log('ads' + ads.map(ad => { return ad.rubrik}))
+            data.forEach(value => {
+              //console.log('value: ' + value.deviceid)
+              value.adRecomendations.forEach(adRecomendation => {
+                //console.log('adClick: ' + adClick.adid)
+                adRecomendation.ad = ads.find(ad => {
+                  return ad.id == adRecomendation.adid
+                })
+                //console.log('adClick.ad.id: ' + adClick.ad.id)
+              })
+            })
+            //console.log('data: ' + data)
+            return data
+          })
+        )
+      })
+    )
+
+
+    this.users$ = zip(enrichedPastClicks, enrichedRecomendations).pipe(
       map(users => {
         let pastClicks = users[0]
         let recomendations = users[1]
@@ -33,7 +89,7 @@ export class IFAUExplorerComponent implements OnInit {
       })
     )
   }
-  
+
   public uploadPastClicks(files: FileList) {
     console.log(files);
     if (files && files.length > 0) {
@@ -127,8 +183,10 @@ export class User {
 export class AdClick {
   adid: number
   timestamp: Date
+  ad: PBAd
 }
 
 export class AdRecomendation {
   adid: number
+  ad: PBAd
 }

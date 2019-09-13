@@ -4,20 +4,106 @@
   <input type="file" class="upload" (change)="uploadPastClicks($event.target.files)">
 </div>
 <div>
-    <span>Recomendations </span>
-    <input type="file" class="upload" (change)="uploadRecomendations($event.target.files)">
-  </div>
+  <span>Recomendations </span>
+  <input type="file" class="upload" (change)="uploadRecomendations($event.target.files)">
+</div>
 <div *ngIf="(users$ | async) as users">
   <div *ngFor="let user of users">
     <hr>
     DeviceID: {{user.deviceid}}<br>
-    Clicks:
-    <ul>
-      <li *ngFor="let adClick of user.adClicks">{{adClick.timestamp | date : "MM MMM"}} - <app-ad-list-item [adID]="adClick.adid"></app-ad-list-item></li>
-    </ul>
-    Recomendations:
-    <ul>
-      <li *ngFor="let adRecomendation of user.adRecomendations"><app-ad-list-item [adID]="adRecomendation.adid"></app-ad-list-item></li>
-    </ul>
+    <table>
+      <caption>Clicks</caption>
+        <thead>
+          <tr>
+            <th>
+              ID
+            </th>
+            <th>
+              Rubrik
+            </th>
+            <th>
+              Yrke
+            </th>
+            <th>
+              Ansökningsdatum
+            </th>
+            <th>
+              Plats
+            </th>
+            <th>
+              Datum
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let adClick of user.adClicks">
+              <td>
+                  <a [href]="'https://www.arbetsformedlingen.se/For-arbetssokande/Platsbanken/annonser/' + adClick.ad.id" target="_blank">{{adClick.ad.id}}</a>
+              </td>
+              <td>
+                  {{adClick.ad.rubrik}}
+              </td>
+              <td>
+                  {{adClick.ad.yrkesroll.namn}}
+              </td>
+              <td>
+                  {{adClick.ad.sistaAnsokningsdatum | date : "MM MMM"}}
+              </td>
+              <td>
+                  {{adClick.ad.erbjudenArbetsplats.kommun ? adClick.ad.erbjudenArbetsplats.kommun.namn : 'ospecad'}}
+              </td>
+              <td>
+                  {{adClick.timestamp | date : "MM MMM"}}
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    <table>
+      <caption>Recomendations</caption>
+      <thead>
+        <tr>
+          <th>
+            ID
+          </th>
+          <th>
+            Rubrik
+          </th>
+          <th>
+            Yrke
+          </th>
+          <th>
+            Ansökningsdatum
+          </th>
+          <th>
+            Plats
+          </th>
+          <th>
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let adRecomendation of user.adRecomendations">
+            <td>
+                <a [href]="'https://www.arbetsformedlingen.se/For-arbetssokande/Platsbanken/annonser/' + adRecomendation.ad.id" target="_blank">{{adRecomendation.ad.id}}</a>
+            </td>
+            <td>
+                {{adRecomendation.ad.rubrik}}
+            </td>
+            <td>
+                {{adRecomendation.ad.yrkesroll.namn}}
+            </td>
+            <td>
+                {{adRecomendation.ad.sistaAnsokningsdatum | date : "MM MMM"}}
+            </td>
+            <td>
+                {{adRecomendation.ad.erbjudenArbetsplats.kommun ? adRecomendation.ad.erbjudenArbetsplats.kommun.namn : 'ospecad'}}
+            </td>
+            <td [class.ej_publicerad]="adRecomendation.ad.presentationStatus != 'PUBLICERAD_ANSOKNINGSBAR'">
+                {{adRecomendation.ad.presentationStatus}}
+            </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
