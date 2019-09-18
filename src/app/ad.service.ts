@@ -29,6 +29,7 @@ export class AdService {
   relevanceThreshold: number = null
   availibleSortOrders = ["relevance", "pubdate-desc", "pubdate-asc", "applydate-desc", "applydate-asc", "updated"]
   sortOrder: string = null
+  contextualAutocomplete: boolean = true
 
   adCache: Map<number, Observable<Ad>> = new Map
 
@@ -111,7 +112,9 @@ export class AdService {
         httpParams = httpParams.append(type, element.code)
       })
     }
-    
+    if (this.contextualAutocomplete == false) {
+      httpParams = httpParams.append('contextual', 'false')
+    }
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
       params: httpParams
