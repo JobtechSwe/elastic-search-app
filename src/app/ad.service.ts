@@ -15,8 +15,8 @@ export class AdService {
     this.jsEnvironements = [
       new JSEnvironment("Production", "https://open-api.dev.services.jtech.se", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U"),
       new JSEnvironment("Staging", "https://staging-jobs.dev.services.jtech.se", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U"),
-      new JSEnvironment("Dev", "https://dev-open-api.dev.services.jtech.se/", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U"),
-      new JSEnvironment("i1", "https://i1-open-api.dev.services.jtech.se/", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U")
+      new JSEnvironment("Dev", "https://dev-open-api.dev.services.jtech.se", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U"),
+      new JSEnvironment("i1", "https://i1-open-api.dev.services.jtech.se", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U")
     ]
     this.selectedEnvironment = this.jsEnvironements[0]
     this.adLimit = 10
@@ -30,15 +30,22 @@ export class AdService {
   availibleSortOrders = ["relevance", "pubdate-desc", "pubdate-asc", "applydate-desc", "applydate-asc", "updated"]
   sortOrder: string = null
   contextualAutocomplete: boolean = true
+  freetextJoinedWithAnd: boolean = true
 
   adCache: Map<number, Observable<Ad>> = new Map
 
-  getAd(adid: number): Observable<Ad> {
-    const headerDict = {
-      'api-key': this.selectedEnvironment.apiKey
+  headerDict(): Record<string, string> {
+    var headers:  Record<string, string> = {}
+    headers['api-key'] = this.selectedEnvironment.apiKey
+    if (this.freetextJoinedWithAnd != true) {
+      headers['x-feature-freetext-bool-method'] = 'or'
     }
+    return headers
+  }
+
+  getAd(adid: number): Observable<Ad> {
     const requestOptions = {
-      headers: new HttpHeaders(headerDict),
+      headers: new HttpHeaders(this.headerDict()),
       params: new HttpParams()
     }
 
@@ -60,9 +67,6 @@ export class AdService {
   }
 
   getAds(request: SearchAdRequest): Observable<SearchAdResponse> {
-    const headerDict = {
-      'api-key': this.selectedEnvironment.apiKey
-    }
     let httpParams = new HttpParams()
     if (request.term) {
       httpParams = httpParams.set('q', request.term)
@@ -90,7 +94,7 @@ export class AdService {
       })
     }
     const requestOptions = {
-      headers: new HttpHeaders(headerDict),
+      headers: new HttpHeaders(this.headerDict()),
       params: httpParams
     }
     return this.http.get<SearchAdResponse>(`${this.selectedEnvironment.url}/search`, requestOptions);
@@ -99,9 +103,6 @@ export class AdService {
   complete(term: string, request: SearchAdRequest): Observable<CompleteResponse> {
     if (!term) {
       return of(new CompleteResponse());
-    }
-    const headerDict = {
-      'api-key': this.selectedEnvironment.apiKey
     }
 
     let httpParams = new HttpParams()
@@ -116,7 +117,7 @@ export class AdService {
       httpParams = httpParams.append('contextual', 'false')
     }
     const requestOptions = {
-      headers: new HttpHeaders(headerDict),
+      headers: new HttpHeaders(this.headerDict()),
       params: httpParams
     }
 
@@ -127,14 +128,11 @@ export class AdService {
     if (!term) {
       return NEVER
     }
-    const headerDict = {
-      'api-key': this.selectedEnvironment.apiKey
-    }
 
     let httpParams = new HttpParams()
     httpParams = httpParams.set('q', term)
     const requestOptions = {
-      headers: new HttpHeaders(headerDict),
+      headers: new HttpHeaders(this.headerDict()),
       params: httpParams
     }
 
