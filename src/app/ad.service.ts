@@ -31,14 +31,18 @@ export class AdService {
   sortOrder: string = null
   contextualAutocomplete: boolean = true
   freetextJoinedWithAnd: boolean = true
+  allowEmptyTypeahead: boolean = false
 
   adCache: Map<number, Observable<Ad>> = new Map
 
-  headerDict(): Record<string, string> {
-    var headers:  Record<string, string> = {}
+  headerDict(): Record<string, any> {
+    var headers:  Record<string, any> = {}
     headers['api-key'] = this.selectedEnvironment.apiKey
     if (this.freetextJoinedWithAnd != true) {
       headers['x-feature-freetext-bool-method'] = 'or'
+    }
+    if (this.allowEmptyTypeahead == true) {
+      headers['x-feature-allow-empty-typeahead'] = true
     }
     return headers
   }
