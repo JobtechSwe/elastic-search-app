@@ -41,8 +41,9 @@ export class AdService {
     if (this.freetextJoinedWithAnd != true) {
       headers['x-feature-freetext-bool-method'] = 'or'
     }
+    //headers['x-feature-allow-empty-typeahead'] = 'true'
     if (this.allowEmptyTypeahead == true) {
-      headers['x-feature-allow-empty-typeahead'] = true
+      headers['x-feature-allow-empty-typeahead'] = 'true'
     }
     return headers
   }
