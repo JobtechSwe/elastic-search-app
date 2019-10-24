@@ -32,6 +32,7 @@ export class AdService {
   contextualAutocomplete: boolean = true
   freetextJoinedWithAnd: boolean = true
   allowEmptyTypeahead: boolean = false
+  includeSynonymsTypeahead: boolean = false
 
   adCache: Map<number, Observable<Ad>> = new Map
 
@@ -41,9 +42,11 @@ export class AdService {
     if (this.freetextJoinedWithAnd != true) {
       headers['x-feature-freetext-bool-method'] = 'or'
     }
-    //headers['x-feature-allow-empty-typeahead'] = 'true'
     if (this.allowEmptyTypeahead == true) {
       headers['x-feature-allow-empty-typeahead'] = 'true'
+    }
+    if (this.includeSynonymsTypeahead == true) {
+      headers['x-feature-include-synonyms-typeahead'] = 'true'
     }
     return headers
   }
