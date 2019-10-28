@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Ad } from './model/ad';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpParameterCodec } from '@angular/common/http';
 //import { Observable, of, NEVER } from 'rxjs';
 import { SearchCriteria } from './model/search-criteria';
 import { Observable, of, NEVER } from 'rxjs';
@@ -54,7 +54,7 @@ export class AdService {
   getAd(adid: number): Observable<Ad> {
     const requestOptions = {
       headers: new HttpHeaders(this.headerDict()),
-      params: new HttpParams()
+      params: new HttpParams({ encoder: new CustomHttpParamEncoder() })
     }
 
     let cachedAd = this.adCache.get(adid)
@@ -75,7 +75,7 @@ export class AdService {
   }
 
   getAds(request: SearchAdRequest): Observable<SearchAdResponse> {
-    let httpParams = new HttpParams()
+    let httpParams = new HttpParams({ encoder: new CustomHttpParamEncoder() })
     if (request.term) {
       httpParams = httpParams.set('q', request.term)
     }
@@ -113,7 +113,7 @@ export class AdService {
       return of(new CompleteResponse());
     }
 
-    let httpParams = new HttpParams()
+    let httpParams = new HttpParams({ encoder: new CustomHttpParamEncoder() })
     httpParams = httpParams.set('q', term)
     if (request.criterias != undefined) {
       request.criterias.forEach(element => {
@@ -137,7 +137,7 @@ export class AdService {
       return NEVER
     }
 
-    let httpParams = new HttpParams()
+    let httpParams = new HttpParams({ encoder: new CustomHttpParamEncoder() })
     httpParams = httpParams.set('q', term)
     const requestOptions = {
       headers: new HttpHeaders(this.headerDict()),
@@ -221,4 +221,19 @@ export class FreeTextConcepts {
   trait: Array<string> = []
   trait_must: Array<string> = []
   trait_must_not: Array<string> = []
+}
+
+export class CustomHttpParamEncoder implements HttpParameterCodec {
+  encodeKey(key: string): string {
+    return encodeURIComponent(key);
+  }
+  encodeValue(value: string): string {
+    return encodeURIComponent(value);
+  }
+  decodeKey(key: string): string {
+    return decodeURIComponent(key);
+  }
+  decodeValue(value: string): string {
+    return decodeURIComponent(value);
+  }
 }
