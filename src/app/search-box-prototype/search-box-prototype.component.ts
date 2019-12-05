@@ -18,7 +18,7 @@ export class SearchBoxPrototypeComponent implements OnInit {
   
   @ViewChild('searchBox', { read: MatAutocompleteTrigger }) autoComplete: MatAutocompleteTrigger;
   
-  constructor(private autocompleteService: AutocompleteService) { }
+  constructor(public autocompleteService: AutocompleteService) { }
 
   ngOnInit() {
     this.autocompleteOptions = this.searchBoxControl.valueChanges
