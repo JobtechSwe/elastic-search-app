@@ -20,11 +20,14 @@ import { SearchOptionsComponent } from './search-options/search-options.componen
 import { SearchResultItemComponent } from './search-result-item/search-result-item.component';
 import { IFAUExplorerComponent } from './ifauexplorer/ifauexplorer.component';
 import { AdListItemComponent } from './ad-list-item/ad-list-item.component';
+import { AutocompletePrototypeComponent } from './autocomplete-prototype/autocomplete-prototype.component';
+import { SearchBoxPrototypeComponent } from './search-box-prototype/search-box-prototype.component';
 
 const appRoutes: Routes = [
   { path: '', component: AdsComponent },
   { path: 'simplesearch', component: SimpleSearchComponent },
   { path: 'ifauexplorer', component: IFAUExplorerComponent},
+  { path: 'autocomplete', component: AutocompletePrototypeComponent },
 ];
 
 @NgModule({
@@ -41,7 +44,9 @@ const appRoutes: Routes = [
     SearchOptionsComponent,
     SearchResultItemComponent,
     IFAUExplorerComponent,
-    AdListItemComponent
+    AdListItemComponent,
+    AutocompletePrototypeComponent,
+    SearchBoxPrototypeComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, BrowserAnimationsModule, ReactiveFormsModule, FormsModule,
