@@ -15,8 +15,7 @@ export class AdService {
     this.jsEnvironements = [
       new JSEnvironment("Production", "https://jobsearch.api.jobtechdev.se/", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U"),
       new JSEnvironment("Staging", "https://staging-jobs.dev.services.jtech.se", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U"),
-      new JSEnvironment("Dev", "https://dev-jobsearch-api.jobtechdev.se/", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U"),
-      new JSEnvironment("i1", "https://i1-open-api.dev.services.jtech.se", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U")
+      new JSEnvironment("Dev", "https://dev-jobsearch-api.jobtechdev.se/", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U")
     ]
     this.selectedEnvironment = this.jsEnvironements[0]
     this.adLimit = 10
