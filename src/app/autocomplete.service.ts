@@ -16,6 +16,7 @@ export class AutocompleteService {
   includeSynonyms: boolean = false
   completeResult: boolean = false
   extraResult: boolean = false
+  spellcheckTypeahead: boolean = false
 
   headerDict(): Record<string, any> {
     var headers:  Record<string, any> = {}
@@ -26,6 +27,9 @@ export class AutocompleteService {
      if (this.includeSynonyms == true) {
        headers['x-feature-include-synonyms-typeahead'] = 'true'
      }
+     if (this.spellcheckTypeahead == true) {
+      headers['x-feature-spellcheck-typeahead'] = 'true'
+    }
     return headers
   }
 

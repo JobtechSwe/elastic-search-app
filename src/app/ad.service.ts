@@ -32,6 +32,7 @@ export class AdService {
   freetextJoinedWithAnd: boolean = true
   allowEmptyTypeahead: boolean = false
   includeSynonymsTypeahead: boolean = false
+  spellcheckTypeahead: boolean = false
 
   adCache: Map<number, Observable<Ad>> = new Map
 
@@ -46,6 +47,9 @@ export class AdService {
     }
     if (this.includeSynonymsTypeahead == true) {
       headers['x-feature-include-synonyms-typeahead'] = 'true'
+    }
+    if (this.spellcheckTypeahead == true) {
+      headers['x-feature-spellcheck-typeahead'] = 'true'
     }
     return headers
   }
