@@ -14,6 +14,6 @@
   </div>
   <app-free-text-concepts [searchResult$]="searchService.searchResult$"></app-free-text-concepts>
   <app-search-stats [searchResult$]="searchService.searchResult$" (selectedStats)="searchService.selectStats($event)"></app-search-stats>
-  
+  <app-criteria-recomendations [searchResult$]="searchService.searchResult$"></app-criteria-recomendations>
   <app-search-result [searchResult$]="searchService.searchResult$"></app-search-result>
 </div>

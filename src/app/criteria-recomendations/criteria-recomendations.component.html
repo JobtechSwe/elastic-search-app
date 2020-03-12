@@ -1,0 +1,20 @@
+<div *ngIf="(occupationRek | async) as occupationRek">
+  <mat-accordion #statsAccordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Yrkesrekommendationer
+        </mat-panel-title>
+        <mat-panel-description>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div *ngFor="let rek of occupationRek">
+        {{ rek.title }}
+      </div>
+      <p>Baserat på</p>
+      <div *ngFor="let profession of professionList">
+        {{ profession }}
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
