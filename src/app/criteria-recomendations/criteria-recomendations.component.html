@@ -11,9 +11,19 @@
       <div *ngFor="let rek of occupationRek">
         {{ rek.title }}
       </div>
-      <p>Baserat på</p>
-      <div *ngFor="let profession of professionList">
-        {{ profession }}
+      <br>
+      <b>Baserat på</b>
+      <div *ngFor="let profession of includedBase">
+        {{ profession.term + " (" + profession.count + ")" }}
+      </div>
+      <br>
+      <b>Exkluderat (under {{ cutOfCount }} antal annonser)</b>
+      <div *ngFor="let profession of exludedBase">
+        {{ profession.term + " (" + profession.count + ")" }}
+      </div>
+      <div>
+        <label>Minst antal annonser {{ cutOfPercent.value }}%: </label>
+        <mat-slider thumbLabel max="100" min="0" step="1" [(ngModel)]="cutOfPercent.value" (ngModelChange)="cutOfPercent.next($event)"></mat-slider>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

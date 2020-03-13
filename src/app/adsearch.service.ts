@@ -32,7 +32,7 @@ export class AdsearchService {
       }),
       map(response => {
         let viewModel = new SearchResultViewModel()
-        viewModel.total = response.total
+        viewModel.total = response.total.value
         if (response.hits) {
           viewModel.hits = response.hits.map(ad => {
             let viewModel = new AdViewModel()

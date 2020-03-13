@@ -1,6 +1,6 @@
 <div *ngIf="(searchResult$ | async) as searchResult">
   <div *ngIf="searchResult.hits.length && !loading">
-    <h3 mat-subheader>Annonser: {{ searchResult.total.value }}</h3>
+    <h3 mat-subheader>Annonser: {{ searchResult.total }}</h3>
     <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
       <div *ngFor="let ad of searchResult.hits">
         <app-search-result-item [ad]="ad"></app-search-result-item>

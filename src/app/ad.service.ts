@@ -170,7 +170,7 @@ export class SearchStats {
 }
 
 export class SearchAdResponse {
-  total: number
+  total: { value: number}
   hits: Array<Ad>
   stats: Array<SearchStats>
   freetext_concepts: FreeTextConcepts

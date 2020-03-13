@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs';
-import { SearchResultViewModel } from '../adsearch.service';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import { SearchResultViewModel, StatsValueViewModel } from '../adsearch.service';
 import { RekAIService } from '../rek-ai.service';
-import { flatMap, map } from 'rxjs/operators';
+import { flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-criteria-recomendations',
@@ -13,16 +13,22 @@ export class CriteriaRecomendationsComponent implements OnInit {
 
   @Input() searchResult$: Observable<SearchResultViewModel>
 
-  occupationRek: Observable<Array<String>>
-  professionList: Array<string>
+  occupationRek: Observable<Array<String>> // Slutgiltiga rekomendation från Rek.ai
+  includedBase: Array<StatsValueViewModel> // Skickat till Rek.AI
+  exludedBase: Array<StatsValueViewModel> // EJ skickat till Rek.AI
+  cutOfPercent = new BehaviorSubject<number>(10)
+  cutOfCount = 0
   
   constructor(private rekAI: RekAIService) { }
 
   ngOnInit() {
-    this.occupationRek = this.searchResult$.pipe(
-      flatMap(result => {
-        this.professionList = result.statsGroup.map(r => r.term)
-        return this.rekAI.getRecomendations(this.professionList)
+    this.occupationRek = combineLatest(this.searchResult$, this.cutOfPercent).pipe(
+      flatMap(([result, cutOfPercent]) => {
+        this.cutOfCount = Math.floor(result.total * (cutOfPercent / 100))
+        this.includedBase = result.statsGroup.filter(r => r.count > this.cutOfCount)
+        this.exludedBase = result.statsGroup.filter(r => r.count <= this.cutOfCount)
+        let onlyNames = this.includedBase.map(r => r.term)
+        return this.rekAI.getRecomendations(onlyNames)
       })
     )
   }
