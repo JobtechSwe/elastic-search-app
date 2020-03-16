@@ -17,16 +17,23 @@ export class CriteriaRecomendationsComponent implements OnInit {
   includedBase: Array<StatsValueViewModel> // Skickat till Rek.AI
   exludedBase: Array<StatsValueViewModel> // EJ skickat till Rek.AI
   cutOfPercent = new BehaviorSubject<number>(10)
-  cutOfCount = 0
+  cutOfCount = new BehaviorSubject<number>(0)
+  minimumNumberOfAds = 0
   
   constructor(private rekAI: RekAIService) { }
 
   ngOnInit() {
-    this.occupationRek = combineLatest(this.searchResult$, this.cutOfPercent).pipe(
-      flatMap(([result, cutOfPercent]) => {
-        this.cutOfCount = Math.floor(result.total * (cutOfPercent / 100))
-        this.includedBase = result.statsGroup.filter(r => r.count > this.cutOfCount)
-        this.exludedBase = result.statsGroup.filter(r => r.count <= this.cutOfCount)
+    this.occupationRek = combineLatest(this.searchResult$, this.cutOfPercent, this.cutOfCount).pipe(
+      flatMap(([result, cutOfPercent, cutOfCount]) => {
+        if (cutOfCount == 0) {
+          this.minimumNumberOfAds = Math.floor(result.total * (cutOfPercent / 100))
+          this.includedBase = result.statsGroup.filter(r => r.count > this.minimumNumberOfAds)
+          this.exludedBase = result.statsGroup.filter(r => r.count <= this.minimumNumberOfAds)
+        } else {
+          this.minimumNumberOfAds = 0
+          this.includedBase = result.statsGroup.filter((r, i) => i < cutOfCount)
+          this.exludedBase = result.statsGroup.filter((r, i) => i >= cutOfCount)
+        }
         let onlyNames = this.includedBase.map(r => r.term)
         return this.rekAI.getRecomendations(onlyNames)
       })

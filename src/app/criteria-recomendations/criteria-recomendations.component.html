@@ -12,19 +12,23 @@
         {{ rek.title }}
       </div>
       <br>
-      <b>Baserat på</b>
+      <b>Baserat på sökresultatets yrkesgrupper</b>
       <div *ngFor="let profession of includedBase">
         {{ profession.term + " (" + profession.count + ")" }}
       </div>
       <br>
-      <b>Exkluderat (under {{ cutOfCount }} antal annonser)</b>
+      <b>Exkluderat (under {{ minimumNumberOfAds }} antal annonser)</b>
       <div *ngFor="let profession of exludedBase">
         {{ profession.term + " (" + profession.count + ")" }}
       </div>
-      <div>
-        <label>Minst antal annonser {{ cutOfPercent.value }}%: </label>
-        <mat-slider thumbLabel max="100" min="0" step="1" [(ngModel)]="cutOfPercent.value" (ngModelChange)="cutOfPercent.next($event)"></mat-slider>
-      </div>
+      <p>
+        <mat-form-field>
+          <input type="number" matInput placeholder="Minst antal annonser %" [(ngModel)]="cutOfPercent.value" (ngModelChange)="cutOfPercent.next($event)">
+        </mat-form-field>
+        <mat-form-field>
+          <input type="number" matInput placeholder="Antal baserade yrkesgrupper" [(ngModel)]="cutOfCount.value" (ngModelChange)="cutOfCount.next($event)">
+        </mat-form-field>
+      </p>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
