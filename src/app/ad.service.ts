@@ -33,6 +33,7 @@ export class AdService {
   allowEmptyTypeahead: boolean = false
   includeSynonymsTypeahead: boolean = false
   spellcheckTypeahead: boolean = false
+  publishedAfterMinutes: number = 0
 
   adCache: Map<number, Observable<Ad>> = new Map
 
@@ -90,6 +91,9 @@ export class AdService {
     }
     if (this.sortOrder != null) {
       httpParams = httpParams.set('sort', this.sortOrder)
+    }
+    if (this.publishedAfterMinutes > 0) {
+      httpParams = httpParams.set('published-after', this.publishedAfterMinutes.toString())
     }
 
     httpParams = httpParams.set('limit', this.adLimit.toString())
@@ -156,6 +160,7 @@ export class SearchAdRequest {
   stats: Array<string>
   criterias: Array<SearchCriteria>
   limit: number = 10
+  published_before_minutes: number = 0
 }
 
 export class SearchStatsValue {

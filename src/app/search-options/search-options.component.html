@@ -11,4 +11,7 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-form-field>
+    <input type="number" matInput placeholder="Publicerad innan (minuter)" [(ngModel)]="this.adService.publishedAfterMinutes">
+  </mat-form-field>
 </div>
