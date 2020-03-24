@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdService } from '../ad.service';
+import { AdsearchService } from '../adsearch.service';
 
 @Component({
   selector: 'app-search-options',
@@ -8,7 +9,7 @@ import { AdService } from '../ad.service';
 })
 export class SearchOptionsComponent implements OnInit {
 
-  constructor(public adService: AdService) { }
+  constructor(public adService: AdService, public searchService: AdsearchService) { }
 
   ngOnInit() {
   }
