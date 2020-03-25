@@ -33,6 +33,7 @@ export class AdService {
   allowEmptyTypeahead: boolean = false
   includeSynonymsTypeahead: boolean = false
   spellcheckTypeahead: boolean = false
+  suggestExtraWordTypeahead: boolean = false
   publishedAfterMinutes: number = 0
 
   adCache: Map<number, Observable<Ad>> = new Map
@@ -51,6 +52,9 @@ export class AdService {
     }
     if (this.spellcheckTypeahead == true) {
       headers['x-feature-spellcheck-typeahead'] = 'true'
+    }
+    if (this.suggestExtraWordTypeahead == true) {
+      headers['x-feature-suggest-extra-word'] = 'true'
     }
     return headers
   }
