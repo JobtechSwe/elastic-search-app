@@ -29,9 +29,7 @@ export class SearchBoxComponent implements OnInit {
   constructor(private adService: AdService) { }
 
   ngOnInit() {
-    let valueChangeSubject = this.searchBoxControl.valueChanges.pipe(
-      tap(value => console.log('value = ' + value))
-    )
+    let valueChangeSubject = this.searchBoxControl.valueChanges
 
     valueChangeSubject.subscribe(value => {
       this.onChange.next(value)
@@ -51,12 +49,8 @@ export class SearchBoxComponent implements OnInit {
             return new Array<AutocompleteValueViewModel>()
           }
           return res.typeahead.map(option => {
-            var searchArray = this.searchBoxControl.value.split(' ')
-            let lastString = searchArray.pop()
-            searchArray.push(option.value)
             var viewModel = new AutocompleteValueViewModel()
-            viewModel.text = searchArray.join(' ')
-            console.log(viewModel)
+            viewModel.text = option.value
             return viewModel
           })
         })
