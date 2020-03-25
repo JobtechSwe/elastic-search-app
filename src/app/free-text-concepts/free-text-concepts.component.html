@@ -1,29 +1,30 @@
 <mat-chip-list *ngIf="(searchResult$ | async) as searchResult">
-  <mat-chip *ngIf="searchResult.freeTextConcepts.location.length > 0">
+  <mat-chip
+    *ngIf="searchResult.freeTextConcepts.location!==undefined && searchResult.freeTextConcepts.location.length > 0">
     location: {{ searchResult.freeTextConcepts.location.join(', ') }}
   </mat-chip>
-  <mat-chip *ngIf="searchResult.freeTextConcepts.location_must.length > 0">
+  <mat-chip *ngIf="searchResult.freeTextConcepts.location!==undefined && searchResult.freeTextConcepts.location_must.length > 0">
     location_must: {{ searchResult.freeTextConcepts.location_must.join(', ') }}
   </mat-chip>
-  <mat-chip *ngIf="searchResult.freeTextConcepts.location_must_not.length > 0">
+  <mat-chip *ngIf="searchResult.freeTextConcepts.location!==undefined && searchResult.freeTextConcepts.location_must_not.length > 0">
     location_must_not: {{ searchResult.freeTextConcepts.location_must_not.join(', ') }}
   </mat-chip>
-  <mat-chip *ngIf="searchResult.freeTextConcepts.occupation.length > 0">
+  <mat-chip *ngIf="searchResult.freeTextConcepts.occupation!==undefined && searchResult.freeTextConcepts.occupation.length > 0">
     occupation: {{ searchResult.freeTextConcepts.occupation.join(', ') }}
   </mat-chip>
-  <mat-chip *ngIf="searchResult.freeTextConcepts.occupation_must.length > 0">
+  <mat-chip *ngIf="searchResult.freeTextConcepts.occupation!==undefined && searchResult.freeTextConcepts.occupation_must.length > 0">
     occupation_must: {{ searchResult.freeTextConcepts.occupation_must.join(', ') }}
   </mat-chip>
-  <mat-chip *ngIf="searchResult.freeTextConcepts.occupation_must_not.length > 0">
+  <mat-chip *ngIf="searchResult.freeTextConcepts.occupation!==undefined && searchResult.freeTextConcepts.occupation_must_not.length > 0">
     occupation_must_not: {{ searchResult.freeTextConcepts.occupation_must_not.join(', ') }}
   </mat-chip>
-  <mat-chip *ngIf="searchResult.freeTextConcepts.skill.length > 0">
+  <mat-chip *ngIf="searchResult.freeTextConcepts.skill!==undefined && searchResult.freeTextConcepts.skill.length > 0">
     skill: {{ searchResult.freeTextConcepts.skill.join(', ') }}
   </mat-chip>
-  <mat-chip *ngIf="searchResult.freeTextConcepts.skill_must.length > 0">
+  <mat-chip *ngIf="searchResult.freeTextConcepts.skill!==undefined && searchResult.freeTextConcepts.skill_must.length > 0">
     skill_must: {{ searchResult.freeTextConcepts.skill_must.join(', ') }}
   </mat-chip>
-  <mat-chip *ngIf="searchResult.freeTextConcepts.skill_must_not.length > 0">
+  <mat-chip *ngIf="searchResult.freeTextConcepts.skill!==undefined && searchResult.freeTextConcepts.skill_must_not.length > 0">
     skill_must_not: {{ searchResult.freeTextConcepts.skill_must_not.join(', ') }}
   </mat-chip>
 </mat-chip-list>
