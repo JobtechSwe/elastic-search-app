@@ -35,6 +35,7 @@ export class AdService {
   spellcheckTypeahead: boolean = false
   suggestExtraWordTypeahead: boolean = false
   publishedAfterMinutes: number = 0
+  employer: [string] = null
 
   adCache: Map<number, Observable<Ad>> = new Map
 
@@ -98,6 +99,11 @@ export class AdService {
     }
     if (this.publishedAfterMinutes > 0) {
       httpParams = httpParams.set('published-after', this.publishedAfterMinutes.toString())
+    }
+    if (this.employer != null) {
+      this.employer.forEach(emp => {
+        httpParams = httpParams.append('employer', emp.trim())
+      });
     }
 
     httpParams = httpParams.set('limit', this.adLimit.toString())

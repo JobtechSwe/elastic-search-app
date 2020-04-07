@@ -14,5 +14,8 @@
   <mat-form-field>
     <input type="number" matInput placeholder="Publicerad innan (minuter)" [(ngModel)]="this.adService.publishedAfterMinutes">
   </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="Arbetsgivare (separera med ,)" [formControl]="employerControl">
+  </mat-form-field>
   <button (click)="this.searchService.search()" mat-raised-button color="primary">Sök</button>
 </div>
