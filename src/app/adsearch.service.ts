@@ -72,6 +72,14 @@ export class AdsearchService {
   }
 
   search(): void {
+    this.currentSearch.offset = 0
+    this.currentSearch.limit = 10
+    this.searchRequest.next(this.currentSearch)
+  }
+
+  paginate(page: number, pageSize: number) {
+    this.currentSearch.offset = page * pageSize
+    this.currentSearch.limit = pageSize
     this.searchRequest.next(this.currentSearch)
   }
 

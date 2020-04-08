@@ -18,13 +18,11 @@ export class AdService {
       new JSEnvironment("Dev", "https://dev-jobsearch-api.jobtechdev.se/", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U")
     ]
     this.selectedEnvironment = this.jsEnvironements[0]
-    this.adLimit = 10
    }
 
   jsEnvironements: JSEnvironment[]
   selectedEnvironment: JSEnvironment
   statsLimit: number = null
-  adLimit: number = null
   relevanceThreshold: number = null
   availibleSortOrders = ["relevance", "pubdate-desc", "pubdate-asc", "applydate-desc", "applydate-asc", "updated"]
   sortOrder: string = null
@@ -106,7 +104,8 @@ export class AdService {
       });
     }
 
-    httpParams = httpParams.set('limit', this.adLimit.toString())
+    httpParams = httpParams.set('limit', request.limit.toString())
+    httpParams = httpParams.set('offset', request.offset.toString())
 
     request.stats.forEach(element => {
       httpParams = httpParams.append('stats', element)
@@ -170,6 +169,7 @@ export class SearchAdRequest {
   stats: Array<string>
   criterias: Array<SearchCriteria>
   limit: number = 10
+  offset: number = 0
   published_before_minutes: number = 0
 }
 

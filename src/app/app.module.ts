@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule }    from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatButtonModule, MatInputModule, MatFormFieldModule, MatToolbarModule, MatListModule, MatAutocompleteModule, MatProgressSpinnerModule, MatExpansionModule, MatChipsModule, MatCardModule, MatBadgeModule, MatIconModule, MatDialogModule, MatSelectModule, MatSidenavModule, MatTooltipModule, MatSliderModule, MatGridListModule, MatSlideToggleModule, MatCheckboxModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatFormFieldModule, MatToolbarModule, MatListModule, MatAutocompleteModule, MatProgressSpinnerModule, MatExpansionModule, MatChipsModule, MatCardModule, MatBadgeModule, MatIconModule, MatDialogModule, MatSelectModule, MatSidenavModule, MatTooltipModule, MatSliderModule, MatGridListModule, MatSlideToggleModule, MatCheckboxModule, MatPaginator, MatPaginatorModule } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { RouterModule, Routes } from '@angular/router';
 
@@ -56,7 +56,7 @@ const appRoutes: Routes = [
     MatToolbarModule, MatListModule, MatAutocompleteModule, MatExpansionModule,
     FlexLayoutModule, MatChipsModule, MatCardModule, MatBadgeModule, MatIconModule,
     MatDialogModule, MatSelectModule, MatSidenavModule, MatTooltipModule, MatSliderModule,
-    MatGridListModule, MatSlideToggleModule, MatCheckboxModule,
+    MatGridListModule, MatSlideToggleModule, MatCheckboxModule, MatPaginatorModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only

@@ -11,3 +11,5 @@
     <span>Hittade inga annonser</span>
   </div>
 </div>
+<mat-paginator [length]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPaginate($event)">
+</mat-paginator>
