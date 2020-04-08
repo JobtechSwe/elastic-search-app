@@ -100,7 +100,10 @@ export class AdService {
     }
     if (this.employer != null) {
       this.employer.forEach(emp => {
-        httpParams = httpParams.append('employer', emp.trim())
+        let trimmedEmp = emp.trim()
+        if (trimmedEmp.length > 0) {
+          httpParams = httpParams.append('employer', emp.trim())
+        }
       });
     }
 
