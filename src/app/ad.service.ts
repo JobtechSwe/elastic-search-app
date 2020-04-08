@@ -13,9 +13,9 @@ export class AdService {
 
   constructor(private http: HttpClient) {
     this.jsEnvironements = [
-      new JSEnvironment("Production", "https://jobsearch.api.jobtechdev.se/", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U"),
-      new JSEnvironment("Staging", "https://staging-jobsearch-api.jobtechdev.se/", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U"),
-      new JSEnvironment("Dev", "https://dev-jobsearch-api.jobtechdev.se/", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U")
+      new JSEnvironment("Production", "https://jobsearch.api.jobtechdev.se", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U"),
+      new JSEnvironment("Staging", "https://staging-jobsearch-api.jobtechdev.se", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U"),
+      new JSEnvironment("Dev", "https://dev-jobsearch-api.jobtechdev.se", "cGF0cmlrLm9sc3NvbkBhcmJldHNmb3JtZWRsaW5nZW4uc2U")
     ]
     this.selectedEnvironment = this.jsEnvironements[0]
    }
@@ -26,12 +26,12 @@ export class AdService {
   relevanceThreshold: number = null
   availibleSortOrders = ["relevance", "pubdate-desc", "pubdate-asc", "applydate-desc", "applydate-asc", "updated"]
   sortOrder: string = null
-  contextualAutocomplete: boolean = true
-  freetextJoinedWithAnd: boolean = true
-  allowEmptyTypeahead: boolean = false
-  includeSynonymsTypeahead: boolean = false
-  spellcheckTypeahead: boolean = false
-  suggestExtraWordTypeahead: boolean = false
+  contextualAutocomplete: boolean = false
+  freetextJoinedWithAnd: boolean = false
+  allowEmptyTypeahead: boolean = true
+  includeSynonymsTypeahead: boolean = true
+  spellcheckTypeahead: boolean = true
+  suggestExtraWordTypeahead: boolean = true
   publishedAfterMinutes: number = 0
   employer: [string] = null
 
@@ -126,7 +126,7 @@ export class AdService {
 
   complete(term: string, request: SearchAdRequest): Observable<CompleteResponse> {
     if (!term) {
-      return of(new CompleteResponse());
+      term = ''
     }
 
     let httpParams = new HttpParams({ encoder: new CustomHttpParamEncoder() })
@@ -144,7 +144,7 @@ export class AdService {
       headers: new HttpHeaders(this.headerDict()),
       params: httpParams
     }
-
+    
     return this.http.get<CompleteResponse>(`${this.selectedEnvironment.url}/complete`, requestOptions);
   }
 
