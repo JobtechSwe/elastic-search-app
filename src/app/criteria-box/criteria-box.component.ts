@@ -4,8 +4,8 @@ import { SearchCriteria } from '../model/search-criteria';
 import { Observable, NEVER } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap, map, catchError, tap } from 'rxjs/operators';
-import { AdService } from '../ad.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { TaxonomyAPIService } from '../taxonomy-api.service';
 
 @Component({
   selector: 'app-criteria-box',
@@ -26,7 +26,7 @@ export class CriteriaBoxComponent implements OnInit {
 
   separatorKeysCodes: number[] = [ENTER, COMMA]
 
-  constructor(private adService: AdService) { }
+  constructor(private taxService: TaxonomyAPIService) { }
 
   ngOnInit() {
 
@@ -36,12 +36,12 @@ export class CriteriaBoxComponent implements OnInit {
         debounceTime(300),
         distinctUntilChanged(),
         switchMap(value => {
-          return this.adService.criteriaSearch(value).pipe(
+          return this.taxService.criteriaSearch(value).pipe(
             catchError(err => NEVER),
           )
         }),
         map(response => {
-          return response.result.map(vfCriteria => {
+          return response.map(vfCriteria => {
             let criteria = new SearchCriteria()
             criteria.type = vfCriteria.type
             criteria.code = vfCriteria.id
