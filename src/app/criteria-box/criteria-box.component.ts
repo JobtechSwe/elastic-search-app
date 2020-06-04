@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, Input } from '@angular/core';
-import { MatChipInputEvent, MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material';
+import { MatChipInputEvent, MatAutocompleteSelectedEvent, MatAutocomplete, MatAutocompleteTrigger } from '@angular/material';
 import { SearchCriteria } from '../model/search-criteria';
 import { Observable, NEVER } from 'rxjs';
 import { FormControl } from '@angular/forms';
@@ -21,8 +21,8 @@ export class CriteriaBoxComponent implements OnInit {
   criteriaOptions: Observable<SearchCriteria[]>
   criteriaCtrl = new FormControl()
 
-  @ViewChild('criteriaInput') criteriaInput: ElementRef<HTMLInputElement>
-  @ViewChild('auto') matAutocomplete: MatAutocomplete
+  @ViewChild('criteriaInput', { read: MatAutocompleteTrigger, static: false }) criteriaInput: ElementRef<HTMLInputElement>
+  @ViewChild('auto', { read: MatAutocomplete, static: false}) matAutocomplete: MatAutocomplete
 
   separatorKeysCodes: number[] = [ENTER, COMMA]
 

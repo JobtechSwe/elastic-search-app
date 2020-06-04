@@ -24,8 +24,8 @@ export class SearchBoxComponent implements OnInit {
   searchBoxControl = new FormControl()
   autocompleteOptions: Observable<AutocompleteValueViewModel[]>
 
-  @ViewChild('searchBox', { read: MatAutocompleteTrigger }) autoComplete: MatAutocompleteTrigger;
-  @ViewChild('searchBox') searchBox: ElementRef;
+  @ViewChild('searchBox', { read: MatAutocompleteTrigger, static: false }) autoComplete: MatAutocompleteTrigger;
+  @ViewChild('searchBox', { read: ElementRef, static: false}) searchBox: ElementRef;
 
   constructor(private adService: AdService) { }
 

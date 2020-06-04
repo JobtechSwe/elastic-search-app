@@ -13,7 +13,7 @@ export class SearchResultComponent implements OnInit {
 
   @Input() searchResult$: Observable<SearchResultViewModel>
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { read: MatPaginator, static: false}) paginator: MatPaginator;
   
   constructor(public adService: AdService, public searchService: AdsearchService) { }
 
