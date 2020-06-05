@@ -17,5 +17,13 @@
   <mat-form-field>
     <input type="text" matInput placeholder="Arbetsgivare (separera med ,)" [formControl]="employerControl">
   </mat-form-field>
+  <mat-form-field>
+    <mat-label>Kräver körkort</mat-label>
+    <mat-select [(value)]="this.adService.drivingLicenseRequired">
+      <mat-option *ngFor="let option of this.adService.availibledrivingLicenseRequired" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <button (click)="this.searchService.search()" mat-raised-button color="primary">Sök</button>
 </div>

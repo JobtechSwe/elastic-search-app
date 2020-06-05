@@ -34,6 +34,8 @@ export class AdService {
   suggestExtraWordTypeahead: boolean = true
   publishedAfterMinutes: number = 0
   employer: [string] = null
+  drivingLicenseRequired: string = null
+  availibledrivingLicenseRequired = ["---", "true", "false"]
 
   adCache: Map<number, Observable<Ad>> = new Map
 
@@ -105,6 +107,10 @@ export class AdService {
           httpParams = httpParams.append('employer', emp.trim())
         }
       });
+    }
+
+    if (this.drivingLicenseRequired != null && this.drivingLicenseRequired != "---") {
+      httpParams = httpParams.set('driving-license-required', this.drivingLicenseRequired)
     }
 
     httpParams = httpParams.set('limit', request.limit.toString())
