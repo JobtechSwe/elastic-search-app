@@ -36,6 +36,7 @@ export class AdService {
   employer: [string] = null
   drivingLicenseRequired: string = null
   availibledrivingLicenseRequired = ["---", "true", "false"]
+  enableFalseNegative: boolean = false
 
   adCache: Map<number, Observable<Ad>> = new Map
 
@@ -56,6 +57,9 @@ export class AdService {
     }
     if (this.suggestExtraWordTypeahead == true) {
       headers['x-feature-suggest-extra-word'] = 'true'
+    }
+    if (this.enableFalseNegative == true) {
+      headers['x-feature-enable-false-negative'] = 'true'
     }
     return headers
   }
