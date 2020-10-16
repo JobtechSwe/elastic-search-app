@@ -37,6 +37,7 @@ export class AdService {
   drivingLicenseRequired: string = null
   availibledrivingLicenseRequired = ["---", "true", "false"]
   enableFalseNegative: boolean = false
+  noEducationDemand: boolean = false
 
   adCache: Map<number, Observable<Ad>> = new Map
 
@@ -115,6 +116,9 @@ export class AdService {
 
     if (this.drivingLicenseRequired != null && this.drivingLicenseRequired != "---") {
       httpParams = httpParams.set('driving-license-required', this.drivingLicenseRequired)
+    }
+    if (this.noEducationDemand) {
+      httpParams = httpParams.set('occupation-collection', 'UdVa_jRr_9DE')
     }
 
     httpParams = httpParams.set('limit', request.limit.toString())

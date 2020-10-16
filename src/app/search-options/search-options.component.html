@@ -25,5 +25,8 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+
+    <mat-checkbox [(ngModel)]="this.adService.noEducationDemand">Utan krav på utbildning</mat-checkbox>
+
   <button (click)="this.searchService.search()" mat-raised-button color="primary">Sök</button>
 </div>
