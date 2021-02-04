@@ -23,6 +23,7 @@ import { AdListItemComponent } from './ad-list-item/ad-list-item.component';
 import { AutocompletePrototypeComponent } from './autocomplete-prototype/autocomplete-prototype.component';
 import { SearchBoxPrototypeComponent } from './search-box-prototype/search-box-prototype.component';
 import { CriteriaRecomendationsComponent } from './criteria-recomendations/criteria-recomendations.component';
+import { DidYouMeanComponent } from './did-you-mean/did-you-mean.component';
 
 const appRoutes: Routes = [
   { path: '', component: AdsComponent },
@@ -48,7 +49,8 @@ const appRoutes: Routes = [
     AdListItemComponent,
     AutocompletePrototypeComponent,
     SearchBoxPrototypeComponent,
-    CriteriaRecomendationsComponent
+    CriteriaRecomendationsComponent,
+    DidYouMeanComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, BrowserAnimationsModule, ReactiveFormsModule, FormsModule,

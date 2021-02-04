@@ -12,6 +12,7 @@
     <div *ngIf="searchService.searchError">Ett fel uppstod vid sökning!</div>
     <mat-spinner *ngIf="searchService.loading"></mat-spinner>
   </div>
+  <app-did-you-mean [searchResult$]="searchService.searchResult$"></app-did-you-mean>
   <app-free-text-concepts [searchResult$]="searchService.searchResult$"></app-free-text-concepts>
   <app-search-stats [searchResult$]="searchService.searchResult$" (selectedStats)="searchService.selectStats($event)"></app-search-stats>
   <app-criteria-recomendations [searchResult$]="searchService.searchResult$"></app-criteria-recomendations>

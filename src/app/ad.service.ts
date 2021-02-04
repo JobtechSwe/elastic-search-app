@@ -165,6 +165,26 @@ export class AdService {
     return this.http.get<CompleteResponse>(`${this.selectedEnvironment.url}/complete`, requestOptions);
   }
 
+  didYouMean(request: SearchAdRequest): Observable<CompleteResponse> {
+    let httpParams = new HttpParams({ encoder: new CustomHttpParamEncoder() })
+    httpParams = httpParams.set('q', request.term)
+    if (request.criterias != undefined) {
+      request.criterias.forEach(element => {
+        let type = element.type
+        httpParams = httpParams.append(type, element.code)
+      })
+    }
+    if (this.contextualAutocomplete == false) {
+      httpParams = httpParams.append('contextual', 'true')
+    }
+    const requestOptions = {
+      headers: new HttpHeaders(this.headerDict()),
+      params: httpParams
+    }
+    
+    return this.http.get<CompleteResponse>(`${this.selectedEnvironment.url}/complete`, requestOptions);
+  }
+
   criteriaSearch(term: string): Observable<CriteriaSearchResponse> {
     if (!term) {
       return NEVER

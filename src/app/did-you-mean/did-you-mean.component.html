@@ -1,0 +1,16 @@
+<div *ngIf="(suggestions | async) as suggestions">
+    <mat-accordion #statsAccordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Menade du?
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngFor="let suggestion of suggestions">
+          {{ suggestion }}
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
