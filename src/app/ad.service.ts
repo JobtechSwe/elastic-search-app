@@ -3,8 +3,8 @@ import { Ad } from './model/ad';
 import { HttpClient, HttpHeaders, HttpParams, HttpParameterCodec } from '@angular/common/http';
 //import { Observable, of, NEVER } from 'rxjs';
 import { SearchCriteria } from './model/search-criteria';
-import { Observable, of, NEVER } from 'rxjs';
-import { map, tap, publishReplay, refCount } from 'rxjs/operators';
+import { Observable, NEVER } from 'rxjs';
+import { map, publishReplay, refCount } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -185,6 +185,51 @@ export class AdService {
     return this.http.get<CompleteResponse>(`${this.selectedEnvironment.url}/complete`, requestOptions);
   }
 
+  getAdCount(request: SearchAdRequest): Observable<number> {
+    let httpParams = new HttpParams({ encoder: new CustomHttpParamEncoder() })
+    if (request.term) {
+      httpParams = httpParams.set('q', request.term)
+    }
+
+    if (this.relevanceThreshold != null) {
+      httpParams = httpParams.set('relevance-threshold', this.relevanceThreshold.toString())
+    }
+    if (this.publishedAfterMinutes > 0) {
+      httpParams = httpParams.set('published-after', this.publishedAfterMinutes.toString())
+    }
+    if (this.employer != null) {
+      this.employer.forEach(emp => {
+        let trimmedEmp = emp.trim()
+        if (trimmedEmp.length > 0) {
+          httpParams = httpParams.append('employer', emp.trim())
+        }
+      });
+    }
+
+    if (this.drivingLicenseRequired != null && this.drivingLicenseRequired != "---") {
+      httpParams = httpParams.set('driving-license-required', this.drivingLicenseRequired)
+    }
+    if (this.noEducationDemand) {
+      httpParams = httpParams.set('occupation-collection', 'UdVa_jRr_9DE')
+    }
+
+    httpParams = httpParams.set('limit', '0')
+    
+    if (request.criterias != undefined) {
+      request.criterias.forEach(element => {
+        let type = element.type
+        httpParams = httpParams.append(type, element.code)
+      })
+    }
+    const requestOptions = {
+      headers: new HttpHeaders(this.headerDict()),
+      params: httpParams
+    }
+    return this.http.get<SearchAdResponse>(`${this.selectedEnvironment.url}/search`, requestOptions).pipe(
+      map(result => result.total.value)
+    )
+  }
+
   criteriaSearch(term: string): Observable<CriteriaSearchResponse> {
     if (!term) {
       return NEVER
@@ -229,7 +274,7 @@ export class SearchAdResponse {
 }
 
 export class CompleteResponse {
-  typeahead: [CompleteValue];
+  typeahead: Array<CompleteValue>
 }
 
 export class CompleteValue {

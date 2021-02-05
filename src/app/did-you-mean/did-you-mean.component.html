@@ -1,4 +1,4 @@
-<div *ngIf="(suggestions | async) as suggestions">
+<div>
     <mat-accordion #statsAccordion>
       <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -8,8 +8,8 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div *ngFor="let suggestion of suggestions">
-          {{ suggestion }}
+        <div *ngFor="let suggestion of suggestions" [ngClass]="{'showUser' : suggestion.shouldShow}">
+          {{ suggestion.label }} ({{ suggestion.adCount }})
         </div>
       </mat-expansion-panel>
     </mat-accordion>
