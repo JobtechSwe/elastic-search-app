@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+<div fxLayout.gt-md="row" fxlayout="column" fxLayoutGap="10px" fxFlex>
   <div>
     <label>Relevans: </label>
     <mat-slider thumbLabel max="1.0" min="0" step="0.1" [(ngModel)]="this.adService.relevanceThreshold"></mat-slider>
@@ -25,8 +25,8 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-
-    <mat-checkbox [(ngModel)]="this.adService.noEducationDemand">Utan krav på utbildning</mat-checkbox>
-
-  <button (click)="this.searchService.search()" mat-raised-button color="primary">Sök</button>
+  <mat-checkbox [(ngModel)]="this.adService.noEducationDemand">Utan krav på utbildning</mat-checkbox>
+  <div>
+    <button (click)="this.searchService.search()" mat-raised-button color="primary">Sök</button>
+  </div>
 </div>
