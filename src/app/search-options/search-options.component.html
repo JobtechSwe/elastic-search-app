@@ -1,4 +1,6 @@
-<div fxLayout.gt-md="row" fxlayout="column" fxLayoutGap="10px" fxFlex>
+
+<div style="margin: 10px">
+<div fxLayout.gt-md="row" fxlayout="column" fxLayoutGap="10px">
   <div>
     <label>Relevans: </label>
     <mat-slider thumbLabel max="1.0" min="0" step="0.1" [(ngModel)]="this.adService.relevanceThreshold"></mat-slider>
@@ -25,8 +27,24 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-form-field>
+    <mat-label>Distans</mat-label>
+    <mat-select [(value)]="this.adService.workRemote">
+      <mat-option *ngFor="let option of this.adService.workRemoteOptions" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Utomlands</mat-label>
+    <mat-select [(value)]="this.adService.workAbroad">
+      <mat-option *ngFor="let option of this.adService.workAbroadOptions" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <mat-checkbox [(ngModel)]="this.adService.noEducationDemand">Utan krav på utbildning</mat-checkbox>
-  <div>
-    <button (click)="this.searchService.search()" mat-raised-button color="primary">Sök</button>
-  </div>
+</div>
+
+  <button (click)="this.searchService.search()" mat-raised-button color="primary">Sök</button>
 </div>

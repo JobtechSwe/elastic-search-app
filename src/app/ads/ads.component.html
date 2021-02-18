@@ -1,13 +1,11 @@
-<div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="10px" style="margin: 10px">
+
   <mat-card>
     <app-search-box (onSearch)="searchService.search()" (onChange)="searchService.updateTerm($event)" [currentSearch]="searchService.currentSearch">
     </app-search-box>
     <app-criteria-box (onChange)="searchService.updateCriterias($event)" [selectedCriterias]="searchService.currentSearch.criterias">
     </app-criteria-box>
   </mat-card>
-  <div class="flowBox">
-      <app-search-options></app-search-options>
-  </div>
+  <app-search-options></app-search-options>
   <div fxLayout="column" fxLayoutAlign=" center">
     <div *ngIf="searchService.searchError">Ett fel uppstod vid sökning!</div>
     <mat-spinner *ngIf="searchService.loading"></mat-spinner>
@@ -17,4 +15,3 @@
   <app-criteria-recomendations [searchResult$]="searchService.searchResult$"></app-criteria-recomendations>
   <app-did-you-mean [searchResult$]="searchService.searchResult$"></app-did-you-mean>
   <app-search-result [searchResult$]="searchService.searchResult$"></app-search-result>
-</div>

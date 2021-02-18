@@ -38,6 +38,10 @@ export class AdService {
   availibledrivingLicenseRequired = ["---", "true", "false"]
   enableFalseNegative: boolean = false
   noEducationDemand: boolean = false
+  workRemote: string = null
+  workRemoteOptions = ["---", "true", "false"]
+  workAbroad: string = null
+  workAbroadOptions = ["---", "true", "false"]
 
   adCache: Map<number, Observable<Ad>> = new Map
 
@@ -116,6 +120,12 @@ export class AdService {
 
     if (this.drivingLicenseRequired != null && this.drivingLicenseRequired != "---") {
       httpParams = httpParams.set('driving-license-required', this.drivingLicenseRequired)
+    }
+    if (this.workRemote != null && this.workRemote != "---") {
+      httpParams = httpParams.set('remote', this.workRemote)
+    }
+    if (this.workAbroad != null && this.workAbroad != "---") {
+      httpParams = httpParams.set('abroad', this.workAbroad)
     }
     if (this.noEducationDemand) {
       httpParams = httpParams.set('occupation-collection', 'UdVa_jRr_9DE')
@@ -208,6 +218,12 @@ export class AdService {
 
     if (this.drivingLicenseRequired != null && this.drivingLicenseRequired != "---") {
       httpParams = httpParams.set('driving-license-required', this.drivingLicenseRequired)
+    }
+    if (this.workRemote != null && this.workRemote != "---") {
+      httpParams = httpParams.set('remote', this.workRemote)
+    }
+    if (this.workAbroad != null && this.workAbroad != "---") {
+      httpParams = httpParams.set('abroad', this.workAbroad)
     }
     if (this.noEducationDemand) {
       httpParams = httpParams.set('occupation-collection', 'UdVa_jRr_9DE')
